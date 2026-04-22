@@ -279,24 +279,38 @@ export default function LovePage() {
       {/* Ocean Background with dynamic color */}
       <div
         className={`fixed inset-0 -z-20 transition-all duration-1000 ${
-          submerged ? "" : "bg-abyss"
-        } ${cigarettesEffect ? "bg-black" : ""}`}
+          cigarettesEffect 
+            ? "bg-black" 
+            : submerged 
+              ? "" 
+              : "bg-[#0a0a0f]"
+        }`}
         style={{
           background: cigarettesEffect 
             ? undefined
             : bgColor 
               ? bgColor 
               : submerged 
-                ? "var(--ocean-blue)" 
+                ? "linear-gradient(to bottom, #0891b2 0%, #0e7490 30%, #155e75 60%, #164e63 100%)" 
                 : undefined
         }}
       >
+        {/* Light rays from surface when submerged */}
         <div
           className={`absolute inset-0 transition-opacity duration-[3000ms] ${
             submerged && !cigarettesEffect ? "opacity-100" : "opacity-0"
           }`}
           style={{
-            background: "radial-gradient(circle at 50% 20%, rgba(0, 180, 216, 0.4) 0%, transparent 70%)",
+            background: "radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.25) 0%, transparent 60%)",
+          }}
+        />
+        {/* Secondary glow */}
+        <div
+          className={`absolute inset-0 transition-opacity duration-[3000ms] ${
+            submerged && !cigarettesEffect ? "opacity-100" : "opacity-0"
+          }`}
+          style={{
+            background: "radial-gradient(circle at 50% 20%, rgba(0, 180, 216, 0.3) 0%, transparent 50%)",
           }}
         />
       </div>
