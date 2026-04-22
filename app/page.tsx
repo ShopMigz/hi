@@ -64,7 +64,22 @@ export default function LovePage() {
   const [floatingTexts, setFloatingTexts] = useState<FloatingText[]>([])
   const audioRef = useRef<HTMLAudioElement | null>(null)
   
-  const loveTexts = ["te amo", "mi amor", "eres hermosa", "mi cielo", "te quiero", "mi vida", "siempre juntos", "eres todo"]
+  const [oceanClickEffect, setOceanClickEffect] = useState(false)
+  
+  const loveTexts = [
+    "Eres mi universo",
+    "Contigo todo es mejor", 
+    "Mi corazon es tuyo",
+    "Eres mi paz",
+    "Juntos por siempre",
+    "Mi alma gemela",
+    "Eres mi hogar",
+    "Te elijo cada dia",
+    "Mi eterno amor",
+    "Eres perfecta",
+    "Mi razon de ser",
+    "Contigo a donde sea"
+  ]
 
   const tracks: Track[] = [
     { title: "Self Aware", artist: "Temper City", icon: "🦭", audioSrc: "/audio/self-aware.mp3", bgColor: "#1a3a4a" },
@@ -112,8 +127,16 @@ export default function LovePage() {
     
     if (track.specialEffect === "cigarettes") {
       setCigarettesEffect(true)
+      setOceanClickEffect(false)
     } else {
       setCigarettesEffect(false)
+      setOceanClickEffect(false)
+    }
+  }
+  
+  const handleOceanClick = () => {
+    if (cigarettesEffect) {
+      setOceanClickEffect(!oceanClickEffect)
     }
   }
 
@@ -278,34 +301,75 @@ export default function LovePage() {
         />
       </div>
       
-      {/* Cigarettes Special Effect - Full screen blue to pink */}
+      {/* Cigarettes Special Effect - Full screen blue to pink with click */}
       {cigarettesEffect && (
-        <div className="fixed inset-0 -z-10 overflow-hidden">
-          {/* Main animated gradient */}
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-900 via-purple-900 to-pink-900 animate-gradient-shift" />
+        <div 
+          className="fixed inset-0 -z-10 overflow-hidden cursor-pointer"
+          onClick={handleOceanClick}
+        >
+          {/* Main animated gradient - transforms to ocean on click */}
+          <div className={`absolute inset-0 transition-all duration-1000 animate-gradient-shift ${
+            oceanClickEffect 
+              ? "bg-gradient-to-b from-cyan-300 via-blue-400 to-pink-300" 
+              : "bg-gradient-to-r from-blue-900 via-purple-900 to-pink-900"
+          }`} />
           
-          {/* Overlay glow effects */}
-          <div className="absolute inset-0">
-            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-cyan-500/40 via-transparent to-transparent animate-pulse" />
-            <div className="absolute bottom-0 right-0 w-full h-full bg-gradient-to-tl from-pink-500/40 via-transparent to-transparent animate-pulse" style={{ animationDelay: "1s" }} />
-          </div>
+          {/* Ocean underwater effect when clicked */}
+          {oceanClickEffect && (
+            <>
+              {/* Light rays from surface */}
+              <div className="absolute top-0 left-[10%] w-20 h-full bg-gradient-to-b from-white/40 via-cyan-200/20 to-transparent blur-sm animate-pulse" />
+              <div className="absolute top-0 left-[30%] w-16 h-full bg-gradient-to-b from-white/30 via-blue-200/15 to-transparent blur-sm animate-pulse" style={{ animationDelay: "0.5s" }} />
+              <div className="absolute top-0 right-[25%] w-24 h-full bg-gradient-to-b from-white/35 via-pink-200/20 to-transparent blur-sm animate-pulse" style={{ animationDelay: "1s" }} />
+              <div className="absolute top-0 right-[10%] w-12 h-full bg-gradient-to-b from-white/25 via-cyan-100/10 to-transparent blur-sm animate-pulse" style={{ animationDelay: "1.5s" }} />
+              
+              {/* Floating sea creatures */}
+              <div className="absolute top-[20%] left-[5%] text-5xl animate-float-1">🐠</div>
+              <div className="absolute top-[40%] right-[8%] text-4xl animate-float-2">🐟</div>
+              <div className="absolute bottom-[30%] left-[15%] text-6xl animate-float-3">🐙</div>
+              <div className="absolute top-[60%] right-[20%] text-5xl animate-float-1">🦑</div>
+              <div className="absolute bottom-[20%] right-[5%] text-7xl animate-float-2">🪸</div>
+              <div className="absolute bottom-[15%] left-[40%] text-4xl animate-float-3">🐡</div>
+              
+              {/* Hint text */}
+              <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/60 text-sm animate-pulse">
+                Click para cambiar el ambiente
+              </div>
+            </>
+          )}
           
-          {/* Moving light beams */}
-          <div className="absolute top-0 left-[20%] w-1 h-full bg-gradient-to-b from-cyan-400/30 via-cyan-400/10 to-transparent animate-beam-1" />
-          <div className="absolute top-0 right-[30%] w-1 h-full bg-gradient-to-b from-pink-400/30 via-pink-400/10 to-transparent animate-beam-2" />
-          <div className="absolute top-0 left-[60%] w-1 h-full bg-gradient-to-b from-purple-400/20 via-purple-400/10 to-transparent animate-beam-3" />
-          
-          {/* Floating smoke particles */}
-          <div className="absolute bottom-[10%] left-[5%] w-4 h-4 rounded-full bg-white/15 animate-smoke-1" />
-          <div className="absolute bottom-[20%] left-[20%] w-6 h-6 rounded-full bg-cyan-300/10 animate-smoke-2" />
-          <div className="absolute bottom-[5%] left-[40%] w-3 h-3 rounded-full bg-white/20 animate-smoke-3" />
-          <div className="absolute bottom-[15%] right-[15%] w-5 h-5 rounded-full bg-pink-300/10 animate-smoke-1" style={{ animationDelay: "1s" }} />
-          <div className="absolute bottom-[25%] right-[30%] w-4 h-4 rounded-full bg-white/15 animate-smoke-2" style={{ animationDelay: "0.5s" }} />
-          <div className="absolute bottom-[8%] right-[5%] w-6 h-6 rounded-full bg-purple-300/10 animate-smoke-3" style={{ animationDelay: "1.5s" }} />
-          
-          {/* Text overlays */}
-          <div className="absolute top-[15%] left-[10%] text-6xl font-black text-white/5 animate-float-1">CIGARETTES</div>
-          <div className="absolute bottom-[20%] right-[5%] text-4xl font-black text-white/5 animate-float-2">OUT THE WINDOW</div>
+          {/* Default smoke/night effect */}
+          {!oceanClickEffect && (
+            <>
+              {/* Overlay glow effects */}
+              <div className="absolute inset-0">
+                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-cyan-500/40 via-transparent to-transparent animate-pulse" />
+                <div className="absolute bottom-0 right-0 w-full h-full bg-gradient-to-tl from-pink-500/40 via-transparent to-transparent animate-pulse" style={{ animationDelay: "1s" }} />
+              </div>
+              
+              {/* Moving light beams */}
+              <div className="absolute top-0 left-[20%] w-1 h-full bg-gradient-to-b from-cyan-400/30 via-cyan-400/10 to-transparent animate-beam-1" />
+              <div className="absolute top-0 right-[30%] w-1 h-full bg-gradient-to-b from-pink-400/30 via-pink-400/10 to-transparent animate-beam-2" />
+              <div className="absolute top-0 left-[60%] w-1 h-full bg-gradient-to-b from-purple-400/20 via-purple-400/10 to-transparent animate-beam-3" />
+              
+              {/* Floating smoke particles */}
+              <div className="absolute bottom-[10%] left-[5%] w-4 h-4 rounded-full bg-white/15 animate-smoke-1" />
+              <div className="absolute bottom-[20%] left-[20%] w-6 h-6 rounded-full bg-cyan-300/10 animate-smoke-2" />
+              <div className="absolute bottom-[5%] left-[40%] w-3 h-3 rounded-full bg-white/20 animate-smoke-3" />
+              <div className="absolute bottom-[15%] right-[15%] w-5 h-5 rounded-full bg-pink-300/10 animate-smoke-1" style={{ animationDelay: "1s" }} />
+              <div className="absolute bottom-[25%] right-[30%] w-4 h-4 rounded-full bg-white/15 animate-smoke-2" style={{ animationDelay: "0.5s" }} />
+              <div className="absolute bottom-[8%] right-[5%] w-6 h-6 rounded-full bg-purple-300/10 animate-smoke-3" style={{ animationDelay: "1.5s" }} />
+              
+              {/* Text overlays */}
+              <div className="absolute top-[15%] left-[10%] text-6xl font-black text-white/5 animate-float-1">CIGARETTES</div>
+              <div className="absolute bottom-[20%] right-[5%] text-4xl font-black text-white/5 animate-float-2">OUT THE WINDOW</div>
+              
+              {/* Hint text */}
+              <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/40 text-sm animate-pulse">
+                Click para sumergirte en el oceano
+              </div>
+            </>
+          )}
         </div>
       )}
 
@@ -541,55 +605,136 @@ function SecretZone({
   trackTitle: string
   trackArtist: string
 }) {
+  const [hearts, setHearts] = useState<{id: number, x: number, y: number}[]>([])
+  
   useEffect(() => {
     onPlay()
   }, [onPlay])
   
+  // Generate floating hearts
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const newHeart = {
+        id: Date.now(),
+        x: Math.random() * 100,
+        y: Math.random() * 100
+      }
+      setHearts(prev => [...prev.slice(-15), newHeart])
+    }, 800)
+    return () => clearInterval(interval)
+  }, [])
+  
   return (
     <div
       className="fixed inset-0 z-[2000] flex animate-fade-in flex-col items-center justify-center overflow-hidden"
-      style={{ background: "radial-gradient(circle, #1a0033 0%, #000 100%)" }}
+      style={{ background: "radial-gradient(ellipse at center, #1a0a2e 0%, #0d0015 50%, #000 100%)" }}
       onClick={onClose}
     >
+      {/* Floating hearts */}
+      {hearts.map(heart => (
+        <div
+          key={heart.id}
+          className="absolute text-3xl animate-float-1 pointer-events-none opacity-40"
+          style={{ left: `${heart.x}%`, top: `${heart.y}%` }}
+        >
+          💜
+        </div>
+      ))}
+      
+      {/* Animated Stars */}
+      <div className="absolute inset-0 overflow-hidden">
+        {[...Array(30)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-1 h-1 bg-white rounded-full animate-pulse"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 3}s`,
+              opacity: Math.random() * 0.5 + 0.2
+            }}
+          />
+        ))}
+      </div>
+      
       {/* Animated Rays */}
-      <div className="absolute left-[20%] h-24 w-0.5 animate-ray bg-gradient-to-b from-transparent via-purple-700 to-transparent opacity-30" />
+      <div className="absolute left-[15%] h-32 w-1 animate-ray bg-gradient-to-b from-transparent via-pink-500 to-transparent opacity-40" />
       <div
-        className="absolute left-[50%] h-24 w-0.5 animate-ray bg-gradient-to-b from-transparent via-purple-700 to-transparent opacity-30"
+        className="absolute left-[35%] h-40 w-1 animate-ray bg-gradient-to-b from-transparent via-purple-500 to-transparent opacity-30"
+        style={{ animationDelay: "0.5s" }}
+      />
+      <div
+        className="absolute left-[55%] h-36 w-1 animate-ray bg-gradient-to-b from-transparent via-cyan-500 to-transparent opacity-35"
         style={{ animationDelay: "1s" }}
       />
       <div
-        className="absolute left-[80%] h-24 w-0.5 animate-ray bg-gradient-to-b from-transparent via-purple-700 to-transparent opacity-30"
+        className="absolute left-[75%] h-28 w-1 animate-ray bg-gradient-to-b from-transparent via-pink-400 to-transparent opacity-40"
+        style={{ animationDelay: "1.5s" }}
+      />
+      <div
+        className="absolute left-[90%] h-44 w-1 animate-ray bg-gradient-to-b from-transparent via-purple-600 to-transparent opacity-25"
         style={{ animationDelay: "2s" }}
       />
 
-      <h1 className="mb-8 animate-glow text-5xl font-black text-white drop-shadow-[0_0_10px_#4a00e0]">
+      {/* Title with better glow */}
+      <h1 className="mb-6 text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400 drop-shadow-[0_0_30px_rgba(168,85,247,0.8)] animate-pulse">
         ZONA SECRETA
       </h1>
+      
+      {/* Subtitle */}
+      <p className="mb-8 text-purple-300/60 text-sm tracking-widest uppercase">Solo para ti</p>
 
-      {/* Vinyl Record */}
-      <div className={`relative h-72 w-72 rounded-full border-8 border-neutral-800 bg-neutral-900 shadow-[0_0_60px_rgba(74,0,224,0.7)] ${isPlaying ? 'animate-spin-slow' : ''}`}>
-        <div className="absolute inset-16 rounded-full border-4 border-neutral-900 bg-gradient-to-br from-pink-400 to-purple-600" />
+      {/* Vinyl Record with better design */}
+      <div className="relative">
+        {/* Glow ring */}
+        <div className="absolute -inset-4 rounded-full bg-gradient-to-r from-pink-500/30 via-purple-500/30 to-cyan-500/30 blur-xl animate-pulse" />
+        
+        <div className={`relative h-56 w-56 md:h-72 md:w-72 rounded-full border-[6px] border-neutral-800 bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-900 shadow-[0_0_80px_rgba(168,85,247,0.5)] ${isPlaying ? 'animate-spin-slow' : ''}`}>
+          {/* Vinyl grooves */}
+          <div className="absolute inset-4 rounded-full border border-neutral-700/30" />
+          <div className="absolute inset-8 rounded-full border border-neutral-700/20" />
+          <div className="absolute inset-12 rounded-full border border-neutral-700/30" />
+          
+          {/* Center label */}
+          <div className="absolute inset-14 md:inset-16 rounded-full border-4 border-neutral-900 bg-gradient-to-br from-pink-500 via-purple-600 to-cyan-500 flex items-center justify-center">
+            <span className="text-3xl md:text-4xl">💀</span>
+          </div>
+          
+          {/* Reflection */}
+          <div className="absolute top-4 left-4 w-1/3 h-1/4 bg-gradient-to-br from-white/10 to-transparent rounded-full blur-sm" />
+        </div>
       </div>
       
       {/* Now Playing */}
-      <div className="mt-6 text-center">
-        <p className="text-lg font-bold text-white">{trackTitle}</p>
-        <p className="text-sm text-purple-300">{trackArtist}</p>
+      <div className="mt-8 text-center">
+        <p className="text-xl md:text-2xl font-bold text-white tracking-wide">{trackTitle}</p>
+        <p className="text-base text-purple-300 mt-1">{trackArtist}</p>
         {isPlaying && (
-          <div className="mt-3 flex justify-center items-end gap-1 h-6">
-            <span className="w-1.5 bg-purple-500 animate-equalizer-1 rounded-full" />
-            <span className="w-1.5 bg-purple-500 animate-equalizer-2 rounded-full" />
-            <span className="w-1.5 bg-purple-500 animate-equalizer-3 rounded-full" />
-            <span className="w-1.5 bg-purple-500 animate-equalizer-1 rounded-full" />
-            <span className="w-1.5 bg-purple-500 animate-equalizer-2 rounded-full" />
+          <div className="mt-4 flex justify-center items-end gap-1.5 h-8">
+            <span className="w-2 bg-gradient-to-t from-pink-500 to-purple-500 animate-equalizer-1 rounded-full" />
+            <span className="w-2 bg-gradient-to-t from-purple-500 to-cyan-500 animate-equalizer-2 rounded-full" />
+            <span className="w-2 bg-gradient-to-t from-cyan-500 to-pink-500 animate-equalizer-3 rounded-full" />
+            <span className="w-2 bg-gradient-to-t from-pink-500 to-purple-500 animate-equalizer-1 rounded-full" />
+            <span className="w-2 bg-gradient-to-t from-purple-500 to-cyan-500 animate-equalizer-2 rounded-full" />
+            <span className="w-2 bg-gradient-to-t from-cyan-500 to-pink-500 animate-equalizer-3 rounded-full" />
+            <span className="w-2 bg-gradient-to-t from-pink-500 to-purple-500 animate-equalizer-1 rounded-full" />
           </div>
         )}
       </div>
 
-      <h3 className="mt-6 max-w-[80%] text-center text-xl text-sky-100">
-        Esta cancion es para ti mi amor
-      </h3>
-      <p className="mt-4 text-sm opacity-50">(Toca en cualquier lado para volver)</p>
+      {/* Love message */}
+      <div className="mt-8 max-w-sm text-center px-4">
+        <p className="text-lg md:text-xl text-white/90 font-light italic leading-relaxed">
+          &quot;En cada nota de esta cancion, esta mi amor por ti. Eres lo mas hermoso que me ha pasado.&quot;
+        </p>
+        <div className="mt-4 flex justify-center gap-2">
+          <span className="text-2xl animate-bounce" style={{ animationDelay: "0s" }}>💜</span>
+          <span className="text-2xl animate-bounce" style={{ animationDelay: "0.1s" }}>🖤</span>
+          <span className="text-2xl animate-bounce" style={{ animationDelay: "0.2s" }}>💜</span>
+        </div>
+      </div>
+      
+      <p className="mt-8 text-sm text-white/30">(Toca en cualquier lado para volver)</p>
     </div>
   )
 }
