@@ -48,6 +48,21 @@ const sealImages = [
   "/images/foca-guitarra.jpg",
 ]
 
+const loveTexts = [
+  "Eres mi universo",
+  "Contigo todo es mejor", 
+  "Mi corazon es tuyo",
+  "Eres mi paz",
+  "Juntos por siempre",
+  "Mi alma gemela",
+  "Eres mi hogar",
+  "Te elijo cada dia",
+  "Mi eterno amor",
+  "Eres perfecta",
+  "Mi razon de ser",
+  "Contigo a donde sea"
+]
+
 export default function LovePage() {
   const [stage, setStage] = useState<"seal" | "question" | "content">("seal")
   const [bubbles, setBubbles] = useState<Bubble[]>([])
@@ -65,21 +80,6 @@ export default function LovePage() {
   const audioRef = useRef<HTMLAudioElement | null>(null)
   
   const [oceanClickEffect, setOceanClickEffect] = useState(false)
-  
-  const loveTexts = [
-    "Eres mi universo",
-    "Contigo todo es mejor", 
-    "Mi corazon es tuyo",
-    "Eres mi paz",
-    "Juntos por siempre",
-    "Mi alma gemela",
-    "Eres mi hogar",
-    "Te elijo cada dia",
-    "Mi eterno amor",
-    "Eres perfecta",
-    "Mi razon de ser",
-    "Contigo a donde sea"
-  ]
 
   const tracks: Track[] = [
     { title: "Self Aware", artist: "Temper City", icon: "🦭", audioSrc: "/audio/self-aware.mp3", bgColor: "#1a3a4a" },
@@ -214,7 +214,7 @@ export default function LovePage() {
       const interval = setInterval(generateText, 4000) // Less frequent - every 4 seconds
       return () => clearInterval(interval)
     }
-  }, [stage, loveTexts])
+  }, [stage])
 
   const generateBubble = useCallback((x: number, y: number, duration: number) => {
     const newBubble: Bubble = {
