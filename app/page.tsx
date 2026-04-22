@@ -318,66 +318,55 @@ export default function LovePage() {
             : bgColor 
               ? bgColor 
               : submerged 
-                ? "linear-gradient(to bottom, #0891b2 0%, #0e7490 30%, #155e75 60%, #164e63 100%)" 
+                ? "linear-gradient(to bottom, #0c1929 0%, #0d1f33 30%, #0a1628 60%, #081220 100%)" 
                 : undefined
         }}
       >
-        {/* Animated particles in background */}
+        {/* Floating bubbles in background */}
         {submerged && !cigarettesEffect && (
           <>
-            <div className="absolute w-2 h-2 rounded-full bg-cyan-300/20 animate-particle-1" style={{ left: '10%', top: '20%' }} />
-            <div className="absolute w-3 h-3 rounded-full bg-blue-300/15 animate-particle-2" style={{ left: '80%', top: '40%' }} />
-            <div className="absolute w-1 h-1 rounded-full bg-white/30 animate-particle-3" style={{ left: '30%', top: '60%' }} />
-            <div className="absolute w-2 h-2 rounded-full bg-cyan-200/20 animate-particle-1" style={{ left: '60%', top: '80%', animationDelay: '2s' }} />
-            <div className="absolute w-4 h-4 rounded-full bg-blue-400/10 animate-particle-2" style={{ left: '20%', top: '70%', animationDelay: '1s' }} />
-            <div className="absolute w-2 h-2 rounded-full bg-teal-300/20 animate-particle-3" style={{ left: '90%', top: '30%', animationDelay: '3s' }} />
-            <div className="absolute w-1 h-1 rounded-full bg-white/40 animate-particle-1" style={{ left: '50%', top: '10%', animationDelay: '1.5s' }} />
-            <div className="absolute w-3 h-3 rounded-full bg-cyan-400/15 animate-particle-2" style={{ left: '70%', top: '90%', animationDelay: '2.5s' }} />
+            <div className="absolute w-2 h-2 rounded-full bg-white/20 animate-bubble-float" style={{ left: '8%', bottom: '-5%', animationDelay: '0s' }} />
+            <div className="absolute w-3 h-3 rounded-full bg-white/15 animate-bubble-float" style={{ left: '15%', bottom: '-5%', animationDelay: '2s' }} />
+            <div className="absolute w-1 h-1 rounded-full bg-white/25 animate-bubble-float" style={{ left: '25%', bottom: '-5%', animationDelay: '4s' }} />
+            <div className="absolute w-2 h-2 rounded-full bg-white/20 animate-bubble-float" style={{ left: '35%', bottom: '-5%', animationDelay: '1s' }} />
+            <div className="absolute w-4 h-4 rounded-full bg-white/10 animate-bubble-float" style={{ left: '50%', bottom: '-5%', animationDelay: '3s' }} />
+            <div className="absolute w-2 h-2 rounded-full bg-white/20 animate-bubble-float" style={{ left: '65%', bottom: '-5%', animationDelay: '5s' }} />
+            <div className="absolute w-1 h-1 rounded-full bg-white/30 animate-bubble-float" style={{ left: '75%', bottom: '-5%', animationDelay: '2.5s' }} />
+            <div className="absolute w-3 h-3 rounded-full bg-white/15 animate-bubble-float" style={{ left: '88%', bottom: '-5%', animationDelay: '4.5s' }} />
           </>
         )}
         
-        {/* Light rays from surface when submerged */}
-        <div
-          className={`absolute inset-0 transition-opacity duration-[3000ms] ${
-            submerged && !cigarettesEffect ? "opacity-100" : "opacity-0"
-          }`}
-          style={{
-            background: "radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.25) 0%, transparent 60%)",
-          }}
-        />
-        {/* Secondary glow */}
-        <div
-          className={`absolute inset-0 transition-opacity duration-[3000ms] ${
-            submerged && !cigarettesEffect ? "opacity-100" : "opacity-0"
-          }`}
-          style={{
-            background: "radial-gradient(circle at 50% 20%, rgba(0, 180, 216, 0.3) 0%, transparent 50%)",
-          }}
-        />
-        {/* Moving light beams underwater */}
+        {/* Fish and sea creatures when submerged - matching reference design */}
         {submerged && !cigarettesEffect && (
           <>
-            <div className="absolute top-0 left-[15%] w-16 h-full bg-gradient-to-b from-white/10 via-cyan-200/5 to-transparent animate-light-beam" />
-            <div className="absolute top-0 left-[45%] w-20 h-full bg-gradient-to-b from-white/8 via-blue-200/5 to-transparent animate-light-beam" style={{ animationDelay: '2s' }} />
-            <div className="absolute top-0 right-[20%] w-12 h-full bg-gradient-to-b from-white/12 via-teal-200/5 to-transparent animate-light-beam" style={{ animationDelay: '4s' }} />
-          </>
-        )}
-        
-        {/* Fish and sea creatures when submerged */}
-        {submerged && !cigarettesEffect && (
-          <>
-            <div className="absolute text-4xl animate-swim-left" style={{ top: '15%', left: '-5%', animationDuration: '12s' }}>🐠</div>
-            <div className="absolute text-3xl animate-swim-right" style={{ top: '35%', right: '-5%', animationDuration: '15s', animationDelay: '2s' }}>🐟</div>
-            <div className="absolute text-5xl animate-swim-left" style={{ top: '55%', left: '-5%', animationDuration: '18s', animationDelay: '5s' }}>🐙</div>
-            <div className="absolute text-4xl animate-swim-right" style={{ top: '75%', right: '-5%', animationDuration: '14s', animationDelay: '3s' }}>🦑</div>
-            <div className="absolute text-3xl animate-swim-left" style={{ top: '25%', left: '-5%', animationDuration: '16s', animationDelay: '7s' }}>🐡</div>
-            <div className="absolute text-6xl animate-swim-right" style={{ top: '85%', right: '-5%', animationDuration: '20s', animationDelay: '1s' }}>🪸</div>
-            <div className="absolute text-5xl animate-swim-left" style={{ top: '45%', left: '-5%', animationDuration: '13s', animationDelay: '4s' }}>🐢</div>
-            <div className="absolute text-4xl animate-swim-right" style={{ top: '65%', right: '-5%', animationDuration: '17s', animationDelay: '6s' }}>🦈</div>
-            <div className="absolute text-3xl animate-swim-left" style={{ top: '10%', left: '-5%', animationDuration: '11s', animationDelay: '8s' }}>🐬</div>
-            <div className="absolute text-5xl animate-float-1" style={{ bottom: '5%', left: '10%' }}>🪸</div>
-            <div className="absolute text-4xl animate-float-2" style={{ bottom: '8%', right: '15%' }}>🌿</div>
-            <div className="absolute text-6xl animate-float-3" style={{ bottom: '3%', left: '50%' }}>🪸</div>
+            {/* Blue tropical fish - left side */}
+            <div className="absolute text-4xl animate-swim-left" style={{ top: '12%', left: '-10%', animationDuration: '15s' }}>🐟</div>
+            <div className="absolute text-3xl animate-swim-left" style={{ top: '8%', left: '-15%', animationDuration: '18s', animationDelay: '3s' }}>🐟</div>
+            
+            {/* Orange/yellow fish - right side */}
+            <div className="absolute text-3xl animate-swim-right" style={{ top: '10%', right: '-10%', animationDuration: '16s', animationDelay: '1s' }}>🐡</div>
+            
+            {/* Striped fish */}
+            <div className="absolute text-4xl animate-swim-right" style={{ top: '25%', right: '-10%', animationDuration: '14s', animationDelay: '2s' }}>🐠</div>
+            
+            {/* Shrimp/sea life on right */}
+            <div className="absolute text-3xl animate-swim-right" style={{ top: '18%', right: '-8%', animationDuration: '20s', animationDelay: '5s' }}>🦐</div>
+            
+            {/* Octopus - left bottom area */}
+            <div className="absolute text-5xl animate-float-1" style={{ bottom: '25%', left: '5%' }}>🐙</div>
+            
+            {/* Mango/fruit reference - bottom left */}
+            <div className="absolute text-6xl animate-float-2" style={{ bottom: '15%', left: '18%' }}>🥭</div>
+            
+            {/* Coral and plants - bottom */}
+            <div className="absolute text-5xl animate-float-3" style={{ bottom: '3%', right: '8%' }}>🪸</div>
+            <div className="absolute text-4xl animate-float-1" style={{ bottom: '5%', right: '5%' }}>🌿</div>
+            
+            {/* More fish around the screen */}
+            <div className="absolute text-3xl animate-swim-left" style={{ top: '45%', left: '-10%', animationDuration: '17s', animationDelay: '4s' }}>🐠</div>
+            <div className="absolute text-4xl animate-swim-right" style={{ top: '55%', right: '-10%', animationDuration: '19s', animationDelay: '6s' }}>🐟</div>
+            <div className="absolute text-3xl animate-swim-left" style={{ top: '70%', left: '-10%', animationDuration: '21s', animationDelay: '8s' }}>🦑</div>
+            <div className="absolute text-4xl animate-swim-right" style={{ top: '80%', right: '-10%', animationDuration: '13s', animationDelay: '2.5s' }}>🐙</div>
           </>
         )}
       </div>
