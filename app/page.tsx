@@ -13,6 +13,14 @@ interface Bubble {
   duration: number
 }
 
+interface ClickBubble {
+  id: number
+  x: number
+  y: number
+  size: number
+  delay: number
+}
+
 interface FloatingSeal {
   id: number
   x: number
@@ -77,6 +85,8 @@ export default function LovePage() {
   const [sealClicked, setSealClicked] = useState(false)
   const [poppingSeals, setPoppingSeals] = useState<number[]>([])
   const [floatingTexts, setFloatingTexts] = useState<FloatingText[]>([])
+  const [clickBubbles, setClickBubbles] = useState<ClickBubble[]>([])
+  const [pressedButton, setPressedButton] = useState<string | null>(null)
   const audioRef = useRef<HTMLAudioElement | null>(null)
   
   const [oceanClickEffect, setOceanClickEffect] = useState(false)
@@ -88,6 +98,7 @@ export default function LovePage() {
     { title: "Babydoll", artist: "Dominic Fike", icon: "🐠", audioSrc: "/audio/babydoll.mp3", bgColor: "#1e3a2f" },
     { title: "I Don't Know You Anymore", artist: "sombr", icon: "🌙", audioSrc: "/audio/i-dont-know-you-anymore.mp3", bgColor: "#0d1a2d" },
     { title: "Cigarettes Out The Window", artist: "TV Girl", icon: "🚬", audioSrc: "/audio/cigarettes-out-the-window.mp3", specialEffect: "cigarettes" },
+    { title: "Lovers Rock", artist: "TV Girl", icon: "🌹", audioSrc: "/audio/lovers-rock.mp3", bgColor: "#4a1a3d" },
     { title: "Dardos", artist: "Romeo Santos, Prince Royce", icon: "🏹", bgColor: "#3d1a1a" },
     { title: "Pensamientos", artist: "Airbag", icon: "💭", bgColor: "#1a2d3d" },
     { title: "Out of My League", artist: "Fitz and The Tantrums", icon: "💗", bgColor: "#3d1a2d" },
@@ -244,6 +255,23 @@ export default function LovePage() {
       generateBubble(e.clientX, e.clientY, 1000)
     }
   }
+  
+  const generateClickBubbles = useCallback((e: React.MouseEvent) => {
+    const newBubbles: ClickBubble[] = []
+    for (let i = 0; i < 12; i++) {
+      newBubbles.push({
+        id: Date.now() + i,
+        x: e.clientX,
+        y: e.clientY,
+        size: Math.random() * 25 + 10,
+        delay: i * 30,
+      })
+    }
+    setClickBubbles(prev => [...prev, ...newBubbles])
+    setTimeout(() => {
+      setClickBubbles(prev => prev.filter(b => !newBubbles.find(nb => nb.id === b.id)))
+    }, 1500)
+  }, [])
 
   const handleSealClick = () => {
     setSealClicked(true)
@@ -275,7 +303,7 @@ export default function LovePage() {
   }
 
   return (
-    <div className="relative h-screen w-full overflow-hidden font-sans" onMouseMove={handleMouseMove}>
+    <div className="relative h-screen w-full overflow-hidden font-sans" onMouseMove={handleMouseMove} onClick={generateClickBubbles}>
       {/* Ocean Background with dynamic color */}
       <div
         className={`fixed inset-0 -z-20 transition-all duration-1000 ${
@@ -295,6 +323,20 @@ export default function LovePage() {
                 : undefined
         }}
       >
+        {/* Animated particles in background */}
+        {submerged && !cigarettesEffect && (
+          <>
+            <div className="absolute w-2 h-2 rounded-full bg-cyan-300/20 animate-particle-1" style={{ left: '10%', top: '20%' }} />
+            <div className="absolute w-3 h-3 rounded-full bg-blue-300/15 animate-particle-2" style={{ left: '80%', top: '40%' }} />
+            <div className="absolute w-1 h-1 rounded-full bg-white/30 animate-particle-3" style={{ left: '30%', top: '60%' }} />
+            <div className="absolute w-2 h-2 rounded-full bg-cyan-200/20 animate-particle-1" style={{ left: '60%', top: '80%', animationDelay: '2s' }} />
+            <div className="absolute w-4 h-4 rounded-full bg-blue-400/10 animate-particle-2" style={{ left: '20%', top: '70%', animationDelay: '1s' }} />
+            <div className="absolute w-2 h-2 rounded-full bg-teal-300/20 animate-particle-3" style={{ left: '90%', top: '30%', animationDelay: '3s' }} />
+            <div className="absolute w-1 h-1 rounded-full bg-white/40 animate-particle-1" style={{ left: '50%', top: '10%', animationDelay: '1.5s' }} />
+            <div className="absolute w-3 h-3 rounded-full bg-cyan-400/15 animate-particle-2" style={{ left: '70%', top: '90%', animationDelay: '2.5s' }} />
+          </>
+        )}
+        
         {/* Light rays from surface when submerged */}
         <div
           className={`absolute inset-0 transition-opacity duration-[3000ms] ${
@@ -313,6 +355,14 @@ export default function LovePage() {
             background: "radial-gradient(circle at 50% 20%, rgba(0, 180, 216, 0.3) 0%, transparent 50%)",
           }}
         />
+        {/* Moving light beams underwater */}
+        {submerged && !cigarettesEffect && (
+          <>
+            <div className="absolute top-0 left-[15%] w-16 h-full bg-gradient-to-b from-white/10 via-cyan-200/5 to-transparent animate-light-beam" />
+            <div className="absolute top-0 left-[45%] w-20 h-full bg-gradient-to-b from-white/8 via-blue-200/5 to-transparent animate-light-beam" style={{ animationDelay: '2s' }} />
+            <div className="absolute top-0 right-[20%] w-12 h-full bg-gradient-to-b from-white/12 via-teal-200/5 to-transparent animate-light-beam" style={{ animationDelay: '4s' }} />
+          </>
+        )}
       </div>
       
       {/* Cigarettes Special Effect - Full screen blue to pink with click */}
@@ -472,6 +522,21 @@ export default function LovePage() {
           }}
         />
       ))}
+      
+      {/* Click Bubbles */}
+      {clickBubbles.map((bubble) => (
+        <div
+          key={bubble.id}
+          className="pointer-events-none absolute rounded-full bg-gradient-to-br from-cyan-300/60 to-blue-400/40 animate-click-bubble border border-white/30"
+          style={{
+            left: bubble.x,
+            top: bubble.y,
+            width: bubble.size,
+            height: bubble.size,
+            animationDelay: `${bubble.delay}ms`,
+          }}
+        />
+      ))}
 
       {/* Stage 1: Seal Intro */}
       {stage === "seal" && (
@@ -518,8 +583,19 @@ export default function LovePage() {
             ¿Quieres salir de la obscuridad y sumergirte conmigo?
           </h1>
           <button
-            onClick={handleSubmerge}
-            className="rounded-full border-[3px] border-cyan-400 bg-cyan-500/10 px-16 py-5 text-2xl font-bold text-white transition-all duration-500 hover:scale-110 hover:bg-cyan-400 hover:text-slate-900 hover:shadow-[0_0_30px_rgba(34,211,238,0.6)]"
+            onClick={(e) => {
+              e.stopPropagation()
+              setPressedButton('submerge')
+              setTimeout(() => {
+                setPressedButton(null)
+                handleSubmerge()
+              }, 200)
+            }}
+            className={`rounded-full border-[3px] border-cyan-400 bg-cyan-500/10 px-16 py-5 text-2xl font-bold text-white transition-all duration-200 hover:bg-cyan-400 hover:text-slate-900 hover:shadow-[0_0_40px_rgba(34,211,238,0.7)] ${
+              pressedButton === 'submerge' 
+                ? 'scale-90 shadow-inner bg-cyan-400/30' 
+                : 'hover:scale-105 active:scale-95'
+            }`}
           >
             SUMERGIRSE
           </button>
@@ -538,11 +614,19 @@ export default function LovePage() {
           </button>
 
           {/* Spotify Style Player */}
-          <div className="absolute left-1/2 top-1/2 z-50 w-[95%] max-w-[420px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-xl bg-gradient-to-b from-[#282828] to-[#121212] shadow-2xl max-h-[90vh]">
+          <div className="absolute left-1/2 top-1/2 z-50 w-[95%] max-w-[420px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl backdrop-blur-xl bg-gradient-to-b from-[#282828]/90 to-[#121212]/95 shadow-[0_8px_32px_rgba(0,0,0,0.4),0_0_60px_rgba(0,180,216,0.15)] border border-white/10 max-h-[90vh]">
+            {/* Animated glow border */}
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500/20 via-blue-500/10 to-teal-500/20 animate-glow-border pointer-events-none" />
+            
             {/* Header */}
-            <div className="bg-gradient-to-b from-ocean-blue/40 to-transparent p-5 pb-8">
-              <div className="flex items-end gap-4">
-                <div className="h-24 w-24 rounded shadow-lg bg-gradient-to-br from-ocean-blue to-sky-300 flex items-center justify-center text-5xl">
+            <div className="relative bg-gradient-to-b from-ocean-blue/50 via-ocean-blue/30 to-transparent p-5 pb-8">
+              {/* Animated background particles in header */}
+              <div className="absolute inset-0 overflow-hidden">
+                <div className="absolute w-32 h-32 rounded-full bg-cyan-400/10 blur-3xl animate-float-1" style={{ top: '-20%', left: '-10%' }} />
+                <div className="absolute w-24 h-24 rounded-full bg-blue-400/10 blur-2xl animate-float-2" style={{ top: '20%', right: '-5%' }} />
+              </div>
+              <div className="relative flex items-end gap-4">
+                <div className="h-24 w-24 rounded-lg shadow-[0_4px_20px_rgba(0,180,216,0.4)] bg-gradient-to-br from-ocean-blue via-cyan-400 to-sky-300 flex items-center justify-center text-5xl transform hover:scale-105 transition-transform duration-300">
                   🦭
                 </div>
                 <div>
@@ -554,10 +638,17 @@ export default function LovePage() {
             </div>
 
             {/* Controls */}
-            <div className="flex items-center gap-4 px-5 py-3">
+            <div className="relative flex items-center gap-4 px-5 py-3">
               <button 
-                onClick={() => activeTrack !== null && playTrack(activeTrack)}
-                className="flex h-14 w-14 items-center justify-center rounded-full bg-[#1ed760] text-black transition-transform hover:scale-105"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setPressedButton('play')
+                  setTimeout(() => setPressedButton(null), 150)
+                  if (activeTrack !== null) playTrack(activeTrack)
+                }}
+                className={`flex h-14 w-14 items-center justify-center rounded-full bg-[#1ed760] text-black transition-all duration-150 shadow-lg hover:shadow-[0_0_20px_rgba(30,215,96,0.5)] ${
+                  pressedButton === 'play' ? 'scale-90 shadow-inner' : 'hover:scale-105 active:scale-90'
+                }`}
               >
                 {isPlaying ? (
                   <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
@@ -790,15 +881,23 @@ function SpotifyTrackRow({
   hasAudio?: boolean
 }) {
   const isCigarettes = track.specialEffect === "cigarettes"
+  const [isPressed, setIsPressed] = useState(false)
+  
+  const handleClick = () => {
+    if (!hasAudio) return
+    setIsPressed(true)
+    setTimeout(() => setIsPressed(false), 150)
+    onClick?.()
+  }
   
   return (
     <div
-      className={`grid grid-cols-[16px_1fr_auto] gap-4 items-center px-4 py-2 rounded-md cursor-pointer transition-all duration-300 group ${
-        isActive ? "bg-white/20" : ""
+      className={`grid grid-cols-[16px_1fr_auto] gap-4 items-center px-4 py-2 rounded-lg cursor-pointer transition-all duration-150 group ${
+        isActive ? "bg-white/20 shadow-inner" : ""
       } ${!hasAudio ? "opacity-40 cursor-not-allowed" : "hover:bg-white/10"} ${
         isCigarettes && isHovered ? "bg-gradient-to-r from-blue-600/30 via-purple-600/30 to-pink-600/30 animate-pulse" : ""
-      }`}
-      onClick={hasAudio ? onClick : undefined}
+      } ${isPressed ? "scale-[0.97] bg-white/15 shadow-inner" : "active:scale-[0.97]"}`}
+      onClick={handleClick}
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
     >

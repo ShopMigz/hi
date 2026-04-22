@@ -529,3 +529,127 @@
 .animate-smoke-3 {
   animation: smoke-3 7s ease-out infinite;
 }
+
+/* Click bubble animation */
+@keyframes click-bubble {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(
+      calc(-50% + var(--random-x, 0px)),
+      calc(-50% - 150px)
+    ) scale(1);
+    opacity: 0;
+  }
+}
+
+.animate-click-bubble {
+  animation: click-bubble 1.2s ease-out forwards;
+  --random-x: calc((var(--i, 0) - 6) * 20px);
+}
+
+.animate-click-bubble:nth-child(1) { --random-x: -60px; }
+.animate-click-bubble:nth-child(2) { --random-x: 40px; }
+.animate-click-bubble:nth-child(3) { --random-x: -30px; }
+.animate-click-bubble:nth-child(4) { --random-x: 70px; }
+.animate-click-bubble:nth-child(5) { --random-x: -80px; }
+.animate-click-bubble:nth-child(6) { --random-x: 20px; }
+.animate-click-bubble:nth-child(7) { --random-x: -50px; }
+.animate-click-bubble:nth-child(8) { --random-x: 60px; }
+.animate-click-bubble:nth-child(9) { --random-x: -20px; }
+.animate-click-bubble:nth-child(10) { --random-x: 50px; }
+.animate-click-bubble:nth-child(11) { --random-x: -70px; }
+.animate-click-bubble:nth-child(12) { --random-x: 30px; }
+
+/* Particle animations for background */
+@keyframes particle-1 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.2;
+  }
+  25% {
+    transform: translate(30px, -20px) scale(1.2);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translate(-20px, -40px) scale(0.8);
+    opacity: 0.3;
+  }
+  75% {
+    transform: translate(10px, -20px) scale(1.1);
+    opacity: 0.2;
+  }
+}
+
+@keyframes particle-2 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.15;
+  }
+  33% {
+    transform: translate(-40px, 30px) scale(1.3);
+    opacity: 0.3;
+  }
+  66% {
+    transform: translate(20px, -30px) scale(0.9);
+    opacity: 0.2;
+  }
+}
+
+@keyframes particle-3 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translate(50px, 40px) scale(1.5);
+    opacity: 0.15;
+  }
+}
+
+.animate-particle-1 {
+  animation: particle-1 8s ease-in-out infinite;
+}
+
+.animate-particle-2 {
+  animation: particle-2 10s ease-in-out infinite;
+}
+
+.animate-particle-3 {
+  animation: particle-3 12s ease-in-out infinite;
+}
+
+/* Light beam animation */
+@keyframes light-beam {
+  0%, 100% {
+    opacity: 0.05;
+    transform: translateX(0) skewX(-5deg);
+  }
+  50% {
+    opacity: 0.15;
+    transform: translateX(20px) skewX(5deg);
+  }
+}
+
+.animate-light-beam {
+  animation: light-beam 6s ease-in-out infinite;
+}
+
+/* Glow border animation for Spotify player */
+@keyframes glow-border {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.animate-glow-border {
+  animation: glow-border 3s ease-in-out infinite;
+}
