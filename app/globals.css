@@ -653,3 +653,74 @@
 .animate-glow-border {
   animation: glow-border 3s ease-in-out infinite;
 }
+
+/* Fish swimming animations */
+@keyframes swim-left {
+  0% {
+    transform: translateX(-100%) scaleX(1);
+    opacity: 0;
+  }
+  5% {
+    opacity: 0.7;
+  }
+  45% {
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateX(calc(100vw + 100%)) scaleX(1);
+    opacity: 0;
+  }
+  50.1% {
+    transform: translateX(calc(100vw + 100%)) scaleX(-1);
+    opacity: 0;
+  }
+  55% {
+    opacity: 0.7;
+  }
+  95% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateX(-100%) scaleX(-1);
+    opacity: 0;
+  }
+}
+
+@keyframes swim-right {
+  0% {
+    transform: translateX(100%) scaleX(-1);
+    opacity: 0;
+  }
+  5% {
+    opacity: 0.7;
+  }
+  45% {
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateX(calc(-100vw - 100%)) scaleX(-1);
+    opacity: 0;
+  }
+  50.1% {
+    transform: translateX(calc(-100vw - 100%)) scaleX(1);
+    opacity: 0;
+  }
+  55% {
+    opacity: 0.7;
+  }
+  95% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateX(100%) scaleX(1);
+    opacity: 0;
+  }
+}
+
+.animate-swim-left {
+  animation: swim-left 12s linear infinite;
+}
+
+.animate-swim-right {
+  animation: swim-right 12s linear infinite;
+}
