@@ -476,17 +476,20 @@ export default function LovePage() {
       {/* Stage 1: Seal Intro */}
       {stage === "seal" && (
         <div
-          className="fixed inset-0 z-[10000] flex cursor-pointer flex-col items-center justify-center bg-black"
+          className="fixed inset-0 z-[10000] flex cursor-pointer flex-col items-center justify-center bg-[#0a0a0f]"
           onClick={handleSealClick}
         >
-          <div className={`text-9xl drop-shadow-[0_0_30px_var(--ocean-blue)] transition-all duration-300 ${
+          {/* Subtle ocean glow at bottom */}
+          <div className="absolute bottom-0 left-0 right-0 h-1/4 bg-gradient-to-t from-cyan-900/20 to-transparent pointer-events-none" />
+          
+          <div className={`text-9xl drop-shadow-[0_0_30px_rgba(0,180,216,0.8)] transition-all duration-300 ${
             sealClicked 
               ? "scale-150 rotate-12 animate-seal-pulse" 
               : "animate-float-seal hover:scale-110"
           }`}>
             🦭
           </div>
-          <p className={`mt-5 font-bold tracking-[3px] text-ocean-blue transition-opacity ${sealClicked ? "opacity-0" : ""}`}>
+          <p className={`mt-5 font-bold tracking-[3px] text-cyan-400 transition-opacity ${sealClicked ? "opacity-0" : ""}`}>
             CLICK A LA FOQUITA
           </p>
         </div>
@@ -495,16 +498,28 @@ export default function LovePage() {
       {/* Stage 2: Question */}
       {stage === "question" && (
         <div
-          className={`fixed inset-0 z-[5000] flex flex-col items-center justify-center text-center transition-opacity duration-1000 ${
+          className={`fixed inset-0 z-[5000] flex flex-col items-center justify-center text-center transition-opacity duration-1000 bg-[#0a0a0f] ${
             submerged ? "pointer-events-none opacity-0" : "opacity-100"
           }`}
         >
-          <h1 className="mb-12 animate-fade-in-up text-4xl font-black md:text-5xl lg:text-6xl drop-shadow-[0_0_20px_rgba(0,180,216,0.8)]">
+          {/* Ocean gradient hint at bottom */}
+          <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-cyan-900/30 to-transparent pointer-events-none" />
+          
+          {/* Bubbles animation hint */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute bottom-0 left-[10%] w-4 h-4 rounded-full bg-cyan-400/20 animate-bubble" style={{ animationDuration: "4s" }} />
+            <div className="absolute bottom-0 left-[30%] w-6 h-6 rounded-full bg-cyan-400/15 animate-bubble" style={{ animationDuration: "5s", animationDelay: "1s" }} />
+            <div className="absolute bottom-0 left-[50%] w-3 h-3 rounded-full bg-cyan-400/25 animate-bubble" style={{ animationDuration: "3.5s", animationDelay: "0.5s" }} />
+            <div className="absolute bottom-0 left-[70%] w-5 h-5 rounded-full bg-cyan-400/20 animate-bubble" style={{ animationDuration: "4.5s", animationDelay: "2s" }} />
+            <div className="absolute bottom-0 left-[85%] w-4 h-4 rounded-full bg-cyan-400/15 animate-bubble" style={{ animationDuration: "5.5s", animationDelay: "1.5s" }} />
+          </div>
+          
+          <h1 className="mb-12 animate-fade-in-up text-4xl font-black md:text-5xl lg:text-6xl text-white drop-shadow-[0_0_20px_rgba(0,180,216,0.8)]">
             ¿Quieres salir de la obscuridad y sumergirte conmigo?
           </h1>
           <button
             onClick={handleSubmerge}
-            className="rounded-full border-[3px] border-white bg-white/5 px-16 py-5 text-2xl font-bold text-white transition-all duration-500 hover:scale-110 hover:bg-white hover:text-abyss hover:shadow-[0_0_30px_white]"
+            className="rounded-full border-[3px] border-cyan-400 bg-cyan-500/10 px-16 py-5 text-2xl font-bold text-white transition-all duration-500 hover:scale-110 hover:bg-cyan-400 hover:text-slate-900 hover:shadow-[0_0_30px_rgba(34,211,238,0.6)]"
           >
             SUMERGIRSE
           </button>
@@ -517,7 +532,7 @@ export default function LovePage() {
           {/* Secret Button */}
           <button
             onClick={() => setShowSecret(true)}
-            className="absolute right-6 top-6 z-[100] text-4xl text-sky-100 drop-shadow-[0_0_10px_var(--ocean-blue)] transition-transform hover:scale-110"
+            className="absolute right-6 top-6 z-[100] text-4xl text-cyan-200 drop-shadow-[0_0_10px_rgba(0,180,216,0.8)] transition-transform hover:scale-110"
           >
             ?
           </button>
