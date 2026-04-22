@@ -13,14 +13,6 @@ interface Bubble {
   duration: number
 }
 
-interface ClickBubble {
-  id: number
-  x: number
-  y: number
-  size: number
-  delay: number
-}
-
 interface FloatingSeal {
   id: number
   x: number
@@ -85,8 +77,6 @@ export default function LovePage() {
   const [sealClicked, setSealClicked] = useState(false)
   const [poppingSeals, setPoppingSeals] = useState<number[]>([])
   const [floatingTexts, setFloatingTexts] = useState<FloatingText[]>([])
-  const [clickBubbles, setClickBubbles] = useState<ClickBubble[]>([])
-  const [pressedButton, setPressedButton] = useState<string | null>(null)
   const audioRef = useRef<HTMLAudioElement | null>(null)
   
   const [oceanClickEffect, setOceanClickEffect] = useState(false)
@@ -98,7 +88,7 @@ export default function LovePage() {
     { title: "Babydoll", artist: "Dominic Fike", icon: "🐠", audioSrc: "/audio/babydoll.mp3", bgColor: "#1e3a2f" },
     { title: "I Don't Know You Anymore", artist: "sombr", icon: "🌙", audioSrc: "/audio/i-dont-know-you-anymore.mp3", bgColor: "#0d1a2d" },
     { title: "Cigarettes Out The Window", artist: "TV Girl", icon: "🚬", audioSrc: "/audio/cigarettes-out-the-window.mp3", specialEffect: "cigarettes" },
-    { title: "Dardos", artist: "Romeo Santos, Prince Royce", icon: "🏹", audioSrc: "/audio/dardos.mp3", bgColor: "#3d1a1a" },
+    { title: "Dardos", artist: "Romeo Santos, Prince Royce", icon: "🏹", bgColor: "#3d1a1a" },
     { title: "Pensamientos", artist: "Airbag", icon: "💭", bgColor: "#1a2d3d" },
     { title: "Out of My League", artist: "Fitz and The Tantrums", icon: "💗", bgColor: "#3d1a2d" },
   ]
@@ -255,23 +245,6 @@ export default function LovePage() {
     }
   }
   
-  const generateClickBubbles = useCallback((e: React.MouseEvent) => {
-    const newBubbles: ClickBubble[] = []
-    for (let i = 0; i < 12; i++) {
-      newBubbles.push({
-        id: Date.now() + i,
-        x: e.clientX,
-        y: e.clientY,
-        size: Math.random() * 25 + 10,
-        delay: i * 30,
-      })
-    }
-    setClickBubbles(prev => [...prev, ...newBubbles])
-    setTimeout(() => {
-      setClickBubbles(prev => prev.filter(b => !newBubbles.find(nb => nb.id === b.id)))
-    }, 1500)
-  }, [])
-
   const handleSealClick = () => {
     setSealClicked(true)
     // Play sombr - I don't know you anymore
@@ -315,11 +288,9 @@ export default function LovePage() {
         style={{
           background: cigarettesEffect 
             ? undefined
-            : bgColor 
-              ? bgColor 
-              : submerged 
-                ? "linear-gradient(to bottom, #0c1929 0%, #0d1f33 30%, #0a1628 60%, #081220 100%)" 
-                : undefined
+            : submerged 
+              ? "linear-gradient(to bottom, #0c1929 0%, #0d1f33 30%, #0a1628 60%, #081220 100%)" 
+              : undefined
         }}
       >
         {/* Floating bubbles in background */}
@@ -529,21 +500,6 @@ export default function LovePage() {
         />
       ))}
       
-      {/* Click Bubbles */}
-      {clickBubbles.map((bubble) => (
-        <div
-          key={bubble.id}
-          className="pointer-events-none absolute rounded-full bg-gradient-to-br from-cyan-300/60 to-blue-400/40 animate-click-bubble border border-white/30"
-          style={{
-            left: bubble.x,
-            top: bubble.y,
-            width: bubble.size,
-            height: bubble.size,
-            animationDelay: `${bubble.delay}ms`,
-          }}
-        />
-      ))}
-
       {/* Stage 1: Seal Intro */}
       {stage === "seal" && (
         <div
