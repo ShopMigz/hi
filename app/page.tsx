@@ -278,19 +278,13 @@ export default function LovePage() {
     <div className="relative h-screen w-full overflow-hidden font-sans" onMouseMove={handleMouseMove}>
       {/* Ocean Background with dynamic color */}
       <div
-        className={`fixed inset-0 -z-20 transition-all duration-1000 ${
-          cigarettesEffect 
-            ? "bg-black" 
-            : submerged 
-              ? "" 
-              : "bg-[#0a0a0f]"
-        }`}
+        className="fixed inset-0 -z-20 transition-all duration-1000"
         style={{
           background: cigarettesEffect 
-            ? undefined
+            ? "#000000"
             : submerged 
               ? "linear-gradient(to bottom, #0a1628 0%, #0d1a2e 25%, #0f1d35 50%, #081525 75%, #050d18 100%)" 
-              : undefined
+              : "#050810"
         }}
       >
         {/* Animated underwater light rays */}
