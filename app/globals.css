@@ -591,6 +591,8 @@
 /* Animation utility classes */
 .animate-bubble {
   animation: bubble linear forwards;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 
 .animate-float-seal {
@@ -646,10 +648,14 @@
 
 .animate-breathe {
   animation: breathe 4s ease-in-out infinite;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 
 .animate-seal-breathe {
   animation: seal-breathe 4s ease-in-out infinite;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 .animate-seal-expand {
@@ -686,6 +692,8 @@
 
 .animate-seal-drift {
   animation: seal-drift ease-in-out forwards;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 
 .animate-seal-pop {
@@ -714,6 +722,8 @@
 
 .animate-love-text-float {
   animation: love-text-float ease-in-out forwards;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 
 .animate-swim-right {
@@ -726,10 +736,14 @@
 
 .animate-float-gentle {
   animation: float-gentle 4s ease-in-out infinite;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 .animate-bubble-rise {
   animation: bubble-rise 8s ease-out infinite;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 
 .animate-seal-pulse {
@@ -997,10 +1011,14 @@
 
 .animate-swim-left {
   animation: swim-left 12s linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 .animate-swim-right {
   animation: swim-right 12s linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 /* Bubble floating up animation */
@@ -1290,4 +1308,43 @@
 /* Radial vignette */
 .bg-radial-vignette {
   background: radial-gradient(ellipse at center, transparent 0%, transparent 40%, rgba(0,0,0,0.4) 100%);
+}
+
+/* Optimized CSS-only bubble stream animation - GPU accelerated */
+@keyframes bubble-stream {
+  0% {
+    transform: translateY(0) translateX(0) scale(0.5);
+    opacity: 0;
+  }
+  5% {
+    opacity: 0.6;
+    transform: translateY(-5vh) translateX(5px) scale(0.8);
+  }
+  20% {
+    transform: translateY(-20vh) translateX(-8px) scale(1);
+    opacity: 0.5;
+  }
+  40% {
+    transform: translateY(-40vh) translateX(10px) scale(1.1);
+    opacity: 0.4;
+  }
+  60% {
+    transform: translateY(-60vh) translateX(-5px) scale(1);
+    opacity: 0.35;
+  }
+  80% {
+    transform: translateY(-80vh) translateX(8px) scale(0.9);
+    opacity: 0.2;
+  }
+  100% {
+    transform: translateY(-100vh) translateX(0) scale(0.7);
+    opacity: 0;
+  }
+}
+
+.animate-bubble-stream {
+  animation: bubble-stream 4s ease-in-out infinite;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }

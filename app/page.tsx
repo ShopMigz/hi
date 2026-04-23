@@ -168,7 +168,7 @@ export default function LovePage() {
     }
   }, [])
 
-  // Generate floating seals
+  // Generate floating seals - optimized with max limit
   useEffect(() => {
     if (stage === "content") {
       const generateSeal = () => {
@@ -178,76 +178,107 @@ export default function LovePage() {
           x: Math.random() * 70 + 15,
           y: Math.random() * 60 + 20,
           image: sealImages[Math.floor(Math.random() * sealImages.length)],
-          duration: 10000,
+          duration: 12000, // Longer duration for smoother experience
           delay: 0,
           visible: true,
         }
         setFloatingSeals(prev => {
-          // Keep max 3 seals at a time
-          const filtered = prev.length >= 3 ? prev.slice(1) : prev
-          return [...filtered, newSeal]
+          // Keep max 2 seals at a time for better performance
+          if (prev.length >= 2) return prev.slice(1).concat(newSeal)
+          return [...prev, newSeal]
         })
       }
       
       generateSeal()
-      const interval = setInterval(generateSeal, 5000)
+      // Increased interval from 5s to 7s for less frequent updates
+      const interval = setInterval(generateSeal, 7000)
       return () => clearInterval(interval)
     }
   }, [stage])
   
-  // Generate floating love texts - fast fade in/out
+  // Generate floating love texts - optimized for performance
   useEffect(() => {
     if (stage === "content") {
       const generateText = () => {
+        const duration = 5000 // Slightly longer for smoother animations
         const newText: FloatingText = {
           id: Date.now() + Math.random(),
           x: Math.random() * 80 + 10,
-          y: 75 + Math.random() * 15, // Start from bottom
+          y: 75 + Math.random() * 15,
           text: loveTexts[Math.floor(Math.random() * loveTexts.length)],
-          duration: 4000, // Fast - 4 seconds
+          duration,
           size: Math.random() * 12 + 16,
         }
         setFloatingTexts(prev => {
-          const filtered = prev.length >= 8 ? prev.slice(1) : prev
-          return [...filtered, newText]
+          // Limit to max 5 texts for better performance
+          if (prev.length >= 5) return prev.slice(1).concat(newText)
+          return [...prev, newText]
         })
         setTimeout(() => {
           setFloatingTexts(prev => prev.filter(t => t.id !== newText.id))
-        }, newText.duration)
+        }, duration)
       }
       
       generateText()
-      const interval = setInterval(generateText, 1500) // More frequent - every 1.5 seconds
+      // Reduced frequency from 1.5s to 2.5s
+      const interval = setInterval(generateText, 2500)
       return () => clearInterval(interval)
     }
   }, [stage])
 
+  // Optimized bubble cleanup with requestAnimationFrame batching
+  useEffect(() => {
+    if (bubbles.length === 0) return
+    const timeout = setTimeout(() => {
+      setBubbles(prev => prev.slice(Math.max(0, prev.length - 15)))
+    }, 4500)
+    return () => clearTimeout(timeout)
+  }, [bubbles.length])
+
   const generateBubble = useCallback((x: number, y: number, duration: number) => {
-    const newBubble: Bubble = {
-      id: Date.now() + Math.random(),
-      x,
-      y,
-      size: Math.random() * 20 + 5,
-      duration,
-    }
-    setBubbles((prev) => [...prev, newBubble])
-    setTimeout(() => {
-      setBubbles((prev) => prev.filter((b) => b.id !== newBubble.id))
-    }, duration)
+    setBubbles((prev) => {
+      // Limit total bubbles for performance
+      if (prev.length >= 25) return prev
+      const newBubble: Bubble = {
+        id: Date.now() + Math.random(),
+        x,
+        y,
+        size: Math.random() * 20 + 5,
+        duration,
+      }
+      return [...prev, newBubble]
+    })
   }, [])
 
   useEffect(() => {
     if (stage !== "seal") {
+      // Reduced frequency from 150ms to 400ms for better performance
       const interval = setInterval(() => {
-        generateBubble(Math.random() * window.innerWidth, window.innerHeight + 10, 4000)
-      }, 150)
+        // Limit max bubbles to 20 for performance
+        setBubbles(prev => {
+          if (prev.length >= 20) return prev
+          const newBubble: Bubble = {
+            id: Date.now() + Math.random(),
+            x: Math.random() * window.innerWidth,
+            y: window.innerHeight + 10,
+            size: Math.random() * 20 + 5,
+            duration: 4000,
+          }
+          return [...prev, newBubble]
+        })
+      }, 400)
       return () => clearInterval(interval)
     }
-  }, [stage, generateBubble])
+  }, [stage])
 
+  // Throttled mouse move for better performance
+  const lastMouseBubble = useRef(0)
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (Math.random() > 0.8) {
-      generateBubble(e.clientX, e.clientY, 1000)
+    const now = Date.now()
+    // Only generate bubble every 200ms and with 30% chance
+    if (now - lastMouseBubble.current > 200 && Math.random() > 0.7) {
+      lastMouseBubble.current = now
+      generateBubble(e.clientX, e.clientY, 1500)
     }
   }
   
@@ -475,17 +506,18 @@ export default function LovePage() {
         </div>
       ))}
 
-      {/* Bubbles */}
+      {/* Bubbles - GPU accelerated */}
       {bubbles.map((bubble) => (
         <div
           key={bubble.id}
-          className="pointer-events-none absolute rounded-full bg-white/30 animate-bubble"
+          className="pointer-events-none absolute rounded-full bg-white/30 animate-bubble will-change-transform"
           style={{
             left: bubble.x,
             top: bubble.y,
             width: bubble.size,
             height: bubble.size,
             animationDuration: `${bubble.duration}ms`,
+            backfaceVisibility: 'hidden',
           }}
         />
       ))}
@@ -496,26 +528,59 @@ export default function LovePage() {
           className="fixed inset-0 z-[10000] flex cursor-pointer flex-col items-center justify-center bg-[#050810]"
           onClick={handleSealClick}
         >
-          {/* Ambient background glow */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {/* Ambient background glow - GPU accelerated */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none will-change-transform">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-cyan-500/5 blur-3xl animate-breathe" />
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-blue-400/8 blur-2xl animate-breathe" style={{ animationDelay: '1s' }} />
           </div>
           
-          {/* Background ocean emojis */}
+          {/* CSS-only bubbles for performance - no JS intervals */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <div className="absolute left-[5%] top-[10%] text-4xl opacity-20 animate-float-gentle">🐟</div>
-            <div className="absolute right-[8%] top-[15%] text-3xl opacity-15 animate-float-gentle" style={{ animationDelay: '1s' }}>🐠</div>
-            <div className="absolute left-[10%] bottom-[20%] text-5xl opacity-20 animate-float-gentle" style={{ animationDelay: '2s' }}>🪸</div>
-            <div className="absolute right-[12%] bottom-[25%] text-4xl opacity-15 animate-float-gentle" style={{ animationDelay: '0.5s' }}>🫧</div>
-            <div className="absolute left-[80%] top-[40%] text-3xl opacity-20 animate-float-gentle" style={{ animationDelay: '1.5s' }}>🐡</div>
-            <div className="absolute left-[15%] top-[50%] text-4xl opacity-15 animate-float-gentle" style={{ animationDelay: '2.5s' }}>🌊</div>
+            {/* Bubble stream 1 */}
+            <div className="absolute left-[10%] bottom-0 w-3 h-3 rounded-full bg-white/20 animate-bubble-stream" style={{ animationDelay: '0s' }} />
+            <div className="absolute left-[10%] bottom-0 w-2 h-2 rounded-full bg-cyan-300/30 animate-bubble-stream" style={{ animationDelay: '0.8s' }} />
+            <div className="absolute left-[10%] bottom-0 w-4 h-4 rounded-full bg-white/15 animate-bubble-stream" style={{ animationDelay: '1.6s' }} />
+            
+            {/* Bubble stream 2 */}
+            <div className="absolute left-[25%] bottom-0 w-2 h-2 rounded-full bg-cyan-200/25 animate-bubble-stream" style={{ animationDelay: '0.3s' }} />
+            <div className="absolute left-[25%] bottom-0 w-3 h-3 rounded-full bg-white/20 animate-bubble-stream" style={{ animationDelay: '1.1s' }} />
+            <div className="absolute left-[25%] bottom-0 w-2.5 h-2.5 rounded-full bg-cyan-300/20 animate-bubble-stream" style={{ animationDelay: '1.9s' }} />
+            
+            {/* Bubble stream 3 */}
+            <div className="absolute left-[40%] bottom-0 w-4 h-4 rounded-full bg-white/15 animate-bubble-stream" style={{ animationDelay: '0.5s' }} />
+            <div className="absolute left-[40%] bottom-0 w-2 h-2 rounded-full bg-cyan-200/30 animate-bubble-stream" style={{ animationDelay: '1.3s' }} />
+            <div className="absolute left-[40%] bottom-0 w-3 h-3 rounded-full bg-white/20 animate-bubble-stream" style={{ animationDelay: '2.1s' }} />
+            
+            {/* Bubble stream 4 */}
+            <div className="absolute left-[55%] bottom-0 w-2.5 h-2.5 rounded-full bg-cyan-300/25 animate-bubble-stream" style={{ animationDelay: '0.2s' }} />
+            <div className="absolute left-[55%] bottom-0 w-3.5 h-3.5 rounded-full bg-white/20 animate-bubble-stream" style={{ animationDelay: '1s' }} />
+            <div className="absolute left-[55%] bottom-0 w-2 h-2 rounded-full bg-cyan-200/30 animate-bubble-stream" style={{ animationDelay: '1.8s' }} />
+            
+            {/* Bubble stream 5 */}
+            <div className="absolute left-[70%] bottom-0 w-3 h-3 rounded-full bg-white/20 animate-bubble-stream" style={{ animationDelay: '0.7s' }} />
+            <div className="absolute left-[70%] bottom-0 w-2 h-2 rounded-full bg-cyan-300/25 animate-bubble-stream" style={{ animationDelay: '1.5s' }} />
+            <div className="absolute left-[70%] bottom-0 w-4 h-4 rounded-full bg-white/15 animate-bubble-stream" style={{ animationDelay: '2.3s' }} />
+            
+            {/* Bubble stream 6 */}
+            <div className="absolute left-[85%] bottom-0 w-2 h-2 rounded-full bg-cyan-200/30 animate-bubble-stream" style={{ animationDelay: '0.4s' }} />
+            <div className="absolute left-[85%] bottom-0 w-3 h-3 rounded-full bg-white/20 animate-bubble-stream" style={{ animationDelay: '1.2s' }} />
+            <div className="absolute left-[85%] bottom-0 w-2.5 h-2.5 rounded-full bg-cyan-300/20 animate-bubble-stream" style={{ animationDelay: '2s' }} />
+          </div>
+          
+          {/* Background ocean emojis - optimized with will-change */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute left-[5%] top-[10%] text-4xl opacity-20 animate-float-gentle will-change-transform">🐟</div>
+            <div className="absolute right-[8%] top-[15%] text-3xl opacity-15 animate-float-gentle will-change-transform" style={{ animationDelay: '1s' }}>🐠</div>
+            <div className="absolute left-[10%] bottom-[20%] text-5xl opacity-20 animate-float-gentle will-change-transform" style={{ animationDelay: '2s' }}>🪸</div>
+            <div className="absolute right-[12%] bottom-[25%] text-4xl opacity-15 animate-float-gentle will-change-transform" style={{ animationDelay: '0.5s' }}>🫧</div>
+            <div className="absolute left-[80%] top-[40%] text-3xl opacity-20 animate-float-gentle will-change-transform" style={{ animationDelay: '1.5s' }}>🐡</div>
+            <div className="absolute left-[15%] top-[50%] text-4xl opacity-15 animate-float-gentle will-change-transform" style={{ animationDelay: '2.5s' }}>🌊</div>
           </div>
           
           {/* Subtle ocean glow at bottom */}
           <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-cyan-900/15 via-cyan-900/5 to-transparent pointer-events-none" />
           
-          <div className={`text-[10rem] transition-all duration-500 ${
+          <div className={`text-[10rem] transition-all duration-500 will-change-transform ${
             sealClicked 
               ? "scale-[1.8] rotate-6 animate-seal-expand" 
               : "animate-seal-breathe hover:scale-110"
@@ -536,9 +601,23 @@ export default function LovePage() {
           }`}
         >
           {/* Ambient background */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute inset-0 overflow-hidden pointer-events-none will-change-transform">
             <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-cyan-500/5 blur-3xl animate-breathe" />
             <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-blue-500/5 blur-3xl animate-breathe" style={{ animationDelay: '2s' }} />
+          </div>
+          
+          {/* CSS-only rising bubbles */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute left-[15%] bottom-0 w-3 h-3 rounded-full bg-white/25 animate-bubble-stream" style={{ animationDelay: '0s' }} />
+            <div className="absolute left-[15%] bottom-0 w-2 h-2 rounded-full bg-cyan-300/30 animate-bubble-stream" style={{ animationDelay: '1.2s' }} />
+            <div className="absolute left-[30%] bottom-0 w-4 h-4 rounded-full bg-white/20 animate-bubble-stream" style={{ animationDelay: '0.4s' }} />
+            <div className="absolute left-[30%] bottom-0 w-2.5 h-2.5 rounded-full bg-cyan-200/25 animate-bubble-stream" style={{ animationDelay: '1.6s' }} />
+            <div className="absolute left-[50%] bottom-0 w-3 h-3 rounded-full bg-white/20 animate-bubble-stream" style={{ animationDelay: '0.8s' }} />
+            <div className="absolute left-[50%] bottom-0 w-2 h-2 rounded-full bg-cyan-300/30 animate-bubble-stream" style={{ animationDelay: '2s' }} />
+            <div className="absolute left-[70%] bottom-0 w-3.5 h-3.5 rounded-full bg-white/25 animate-bubble-stream" style={{ animationDelay: '0.2s' }} />
+            <div className="absolute left-[70%] bottom-0 w-2 h-2 rounded-full bg-cyan-200/30 animate-bubble-stream" style={{ animationDelay: '1.4s' }} />
+            <div className="absolute left-[85%] bottom-0 w-3 h-3 rounded-full bg-white/20 animate-bubble-stream" style={{ animationDelay: '0.6s' }} />
+            <div className="absolute left-[85%] bottom-0 w-2.5 h-2.5 rounded-full bg-cyan-300/25 animate-bubble-stream" style={{ animationDelay: '1.8s' }} />
           </div>
           
           {/* Ocean gradient hint at bottom */}
@@ -546,13 +625,13 @@ export default function LovePage() {
           
           {/* Floating ocean emojis */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <div className="absolute text-4xl opacity-25 animate-swim-right" style={{ left: '-5%', top: '15%', animationDuration: '20s' }}>🐟</div>
-            <div className="absolute text-3xl opacity-20 animate-swim-left" style={{ right: '-5%', top: '30%', animationDuration: '18s', animationDelay: '3s' }}>🐠</div>
-            <div className="absolute text-5xl opacity-30 animate-float-gentle" style={{ left: '5%', bottom: '15%' }}>🦭</div>
-            <div className="absolute text-4xl opacity-20 animate-float-gentle" style={{ right: '8%', bottom: '20%', animationDelay: '1s' }}>🐙</div>
-            <div className="absolute text-3xl opacity-25 animate-bubble-rise" style={{ left: '20%', bottom: '5%' }}>🫧</div>
-            <div className="absolute text-3xl opacity-20 animate-bubble-rise" style={{ left: '70%', bottom: '8%', animationDelay: '2s' }}>🫧</div>
-            <div className="absolute text-4xl opacity-15 animate-float-gentle" style={{ left: '85%', top: '45%', animationDelay: '2s' }}>🐡</div>
+            <div className="absolute text-4xl opacity-25 animate-swim-right will-change-transform" style={{ left: '-5%', top: '15%', animationDuration: '20s' }}>🐟</div>
+            <div className="absolute text-3xl opacity-20 animate-swim-left will-change-transform" style={{ right: '-5%', top: '30%', animationDuration: '18s', animationDelay: '3s' }}>🐠</div>
+            <div className="absolute text-5xl opacity-30 animate-float-gentle will-change-transform" style={{ left: '5%', bottom: '15%' }}>🦭</div>
+            <div className="absolute text-4xl opacity-20 animate-float-gentle will-change-transform" style={{ right: '8%', bottom: '20%', animationDelay: '1s' }}>🐙</div>
+            <div className="absolute text-3xl opacity-25 animate-bubble-rise will-change-transform" style={{ left: '20%', bottom: '5%' }}>🫧</div>
+            <div className="absolute text-3xl opacity-20 animate-bubble-rise will-change-transform" style={{ left: '70%', bottom: '8%', animationDelay: '2s' }}>🫧</div>
+            <div className="absolute text-4xl opacity-15 animate-float-gentle will-change-transform" style={{ left: '85%', top: '45%', animationDelay: '2s' }}>🐡</div>
           </div>
           
           <h1 className="mb-12 animate-fade-in-up text-3xl font-light md:text-4xl lg:text-5xl text-white/90 max-w-3xl px-6 leading-relaxed" style={{ textShadow: '0 0 40px rgba(34, 211, 238, 0.4)' }}>
