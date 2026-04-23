@@ -689,10 +689,11 @@ export default function LovePage() {
           </div>
           
           <h1 
-            className="mb-12 animate-fade-in-up animate-text-glow-pulse text-4xl font-extrabold md:text-5xl lg:text-6xl text-white max-w-4xl px-6 leading-relaxed tracking-wide"
+            className="mb-12 animate-fade-in-up animate-text-glow-pulse text-4xl font-black md:text-5xl lg:text-6xl max-w-4xl px-6 leading-relaxed tracking-wide"
             style={{ 
-              textShadow: '0 0 10px rgba(255, 255, 255, 1), 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.5), 0 0 60px rgba(255, 255, 255, 0.3), 0 0 80px rgba(255, 255, 255, 0.2)',
-              filter: 'drop-shadow(0 0 20px rgba(255, 255, 255, 0.9))'
+              color: '#ffffff',
+              textShadow: '0 0 5px #fff, 0 0 15px #fff, 0 0 30px #fff, 0 0 50px #fff',
+              filter: 'drop-shadow(0 0 25px #fff) brightness(1.1)'
             }}
           >
             ¿Quieres salir de la obscuridad y sumergirte conmigo?
