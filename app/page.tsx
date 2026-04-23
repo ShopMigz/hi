@@ -587,7 +587,11 @@ export default function LovePage() {
           }`} style={{ filter: 'drop-shadow(0 0 40px rgba(34, 211, 238, 0.6))' }}>
             🦭
           </div>
-          <p className={`mt-8 text-sm font-medium tracking-[4px] uppercase text-cyan-400/80 transition-all duration-300 ${sealClicked ? "opacity-0 translate-y-4" : "animate-pulse-subtle"}`}>
+          <p className={`mt-10 text-2xl md:text-3xl font-bold tracking-[6px] uppercase text-cyan-300 transition-all duration-300 ${sealClicked ? "opacity-0 translate-y-4" : "animate-pulse-subtle"}`}
+            style={{ 
+              textShadow: '0 0 20px rgba(34, 211, 238, 0.8), 0 0 40px rgba(34, 211, 238, 0.5), 0 0 60px rgba(34, 211, 238, 0.3), 0 0 80px rgba(34, 211, 238, 0.2)',
+              filter: 'drop-shadow(0 0 10px rgba(34, 211, 238, 0.6))'
+            }}>
             Click a la foquita
           </p>
         </div>
