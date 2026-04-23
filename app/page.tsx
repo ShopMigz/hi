@@ -82,6 +82,7 @@ export default function LovePage() {
   const [cigarettesEffect, setCigarettesEffect] = useState(false)
   const [sealClicked, setSealClicked] = useState(false)
   const [poppingSeals, setPoppingSeals] = useState<number[]>([])
+  const [sealCountdown, setSealCountdown] = useState(3)
   const [floatingTexts, setFloatingTexts] = useState<FloatingText[]>([])
   const audioRef = useRef<HTMLAudioElement | null>(null)
   
@@ -167,6 +168,16 @@ export default function LovePage() {
       }
     }
   }, [])
+
+  // Countdown for seal click
+  useEffect(() => {
+    if (stage === "seal" && sealCountdown > 0) {
+      const timer = setTimeout(() => {
+        setSealCountdown(prev => prev - 1)
+      }, 1000)
+      return () => clearTimeout(timer)
+    }
+  }, [stage, sealCountdown])
 
   // Generate floating seals - optimized with max limit
   useEffect(() => {
@@ -302,8 +313,19 @@ export default function LovePage() {
     }, 600)
   }
   
-  const handleSealPop = (sealId: number) => {
+  const handleSealPop = (sealId: number, e: React.MouseEvent) => {
     setPoppingSeals(prev => [...prev, sealId])
+    // Generate burst of bubbles from the seal position
+    const rect = (e.target as HTMLElement).getBoundingClientRect()
+    const centerX = rect.left + rect.width / 2
+    const centerY = rect.top + rect.height / 2
+    for (let i = 0; i < 20; i++) {
+      setTimeout(() => {
+        const offsetX = (Math.random() - 0.5) * 150
+        const offsetY = (Math.random() - 0.5) * 150
+        generateBubble(centerX + offsetX, centerY + offsetY, 1500 + Math.random() * 1000)
+      }, i * 30)
+    }
     setTimeout(() => {
       setFloatingSeals(prev => prev.filter(s => s.id !== sealId))
       setPoppingSeals(prev => prev.filter(id => id !== sealId))
@@ -487,7 +509,7 @@ export default function LovePage() {
             animationDuration: poppingSeals.includes(seal.id) ? "600ms" : `${seal.duration}ms`,
             animationDelay: poppingSeals.includes(seal.id) ? "0ms" : `${seal.delay}ms`,
           }}
-          onClick={() => handleSealPop(seal.id)}
+          onClick={(e) => handleSealPop(seal.id, e)}
         >
           <Image
             src={seal.image}
@@ -535,8 +557,8 @@ export default function LovePage() {
       {/* Stage 1: Seal Intro */}
       {stage === "seal" && (
         <div
-          className="fixed inset-0 z-[10000] flex cursor-pointer flex-col items-center justify-center bg-[#050810]"
-          onClick={handleSealClick}
+          className={`fixed inset-0 z-[10000] flex flex-col items-center justify-center bg-[#050810] ${sealCountdown === 0 ? 'cursor-pointer' : 'cursor-default'}`}
+          onClick={sealCountdown === 0 ? handleSealClick : undefined}
         >
           {/* Ambient background glow - GPU accelerated */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none will-change-transform">
@@ -597,13 +619,31 @@ export default function LovePage() {
           }`} style={{ filter: 'drop-shadow(0 0 40px rgba(34, 211, 238, 0.6))' }}>
             🦭
           </div>
-          <p className={`mt-10 text-2xl md:text-3xl font-bold tracking-[6px] uppercase text-cyan-300 transition-all duration-300 ${sealClicked ? "opacity-0 translate-y-4" : "animate-pulse-subtle"}`}
-            style={{ 
-              textShadow: '0 0 20px rgba(34, 211, 238, 0.8), 0 0 40px rgba(34, 211, 238, 0.5), 0 0 60px rgba(34, 211, 238, 0.3), 0 0 80px rgba(34, 211, 238, 0.2)',
-              filter: 'drop-shadow(0 0 10px rgba(34, 211, 238, 0.6))'
-            }}>
-            Click a la foquita
-          </p>
+          {/* Countdown or Click text */}
+          {sealCountdown > 0 ? (
+            <div className="mt-10 flex flex-col items-center">
+              <div 
+                className="text-8xl md:text-9xl font-black text-white animate-countdown-pulse"
+                style={{ 
+                  textShadow: '0 0 30px rgba(255, 255, 255, 1), 0 0 60px rgba(34, 211, 238, 0.8), 0 0 90px rgba(34, 211, 238, 0.5)',
+                  filter: 'drop-shadow(0 0 20px rgba(255, 255, 255, 0.8))'
+                }}
+              >
+                {sealCountdown}
+              </div>
+              <p className="mt-4 text-lg md:text-xl text-cyan-400/60 tracking-[4px] uppercase">
+                Preparate...
+              </p>
+            </div>
+          ) : (
+            <p className={`mt-10 text-2xl md:text-3xl font-bold tracking-[6px] uppercase text-cyan-300 transition-all duration-300 ${sealClicked ? "opacity-0 translate-y-4" : "animate-pulse-subtle"}`}
+              style={{ 
+                textShadow: '0 0 20px rgba(34, 211, 238, 0.8), 0 0 40px rgba(34, 211, 238, 0.5), 0 0 60px rgba(34, 211, 238, 0.3), 0 0 80px rgba(34, 211, 238, 0.2)',
+                filter: 'drop-shadow(0 0 10px rgba(34, 211, 238, 0.6))'
+              }}>
+              Click a la foquita
+            </p>
+          )}
         </div>
       )}
 
@@ -649,10 +689,10 @@ export default function LovePage() {
           </div>
           
           <h1 
-            className="mb-12 animate-fade-in-up animate-text-glow-pulse text-4xl font-extrabold md:text-5xl lg:text-6xl text-cyan-100 max-w-4xl px-6 leading-relaxed tracking-wide"
+            className="mb-12 animate-fade-in-up animate-text-glow-pulse text-4xl font-extrabold md:text-5xl lg:text-6xl text-white max-w-4xl px-6 leading-relaxed tracking-wide"
             style={{ 
-              textShadow: '0 0 10px rgba(34, 211, 238, 1), 0 0 20px rgba(34, 211, 238, 0.9), 0 0 40px rgba(34, 211, 238, 0.7), 0 0 60px rgba(34, 211, 238, 0.5), 0 0 80px rgba(34, 211, 238, 0.3)',
-              filter: 'drop-shadow(0 0 15px rgba(34, 211, 238, 0.8))'
+              textShadow: '0 0 10px rgba(255, 255, 255, 1), 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.5), 0 0 60px rgba(255, 255, 255, 0.3), 0 0 80px rgba(255, 255, 255, 0.2)',
+              filter: 'drop-shadow(0 0 20px rgba(255, 255, 255, 0.9))'
             }}
           >
             ¿Quieres salir de la obscuridad y sumergirte conmigo?
