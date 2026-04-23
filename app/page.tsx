@@ -49,18 +49,24 @@ const sealImages = [
 ]
 
 const loveTexts = [
-  "Eres mi universo",
-  "Contigo todo es mejor", 
-  "Mi corazon es tuyo",
-  "Eres mi paz",
-  "Juntos por siempre",
-  "Mi alma gemela",
-  "Eres mi hogar",
-  "Te elijo cada dia",
-  "Mi eterno amor",
-  "Eres perfecta",
-  "Mi razon de ser",
-  "Contigo a donde sea"
+  "Te amo con todo mi ser 💕",
+  "Eres mi universo entero 🌌",
+  "Contigo todo es mejor ✨", 
+  "Mi corazon late por ti 💗",
+  "Eres mi paz y mi calma 🌊",
+  "Juntos por siempre y para siempre 💫",
+  "Mi alma gemela 🦭",
+  "Eres mi hogar 🏠",
+  "Te elijo cada dia 🌹",
+  "Mi eterno amor 💝",
+  "Eres perfecta para mi 🌸",
+  "Mi razon de ser 🌟",
+  "Contigo a donde sea 🐠",
+  "Nadando en tu amor 🐟",
+  "Mi foquita hermosa 🦭",
+  "Eres mi oceano de amor 🌊",
+  "Burbujas de felicidad 🫧",
+  "Mi tesoro del mar 💎"
 ]
 
 export default function LovePage() {
@@ -377,30 +383,48 @@ export default function LovePage() {
         </div>
       )}
 
-      {/* Ambient glow orbs - replacing ugly emojis */}
+      {/* Floating ocean emojis */}
       {stage === "content" && (
         <>
-          <div className="absolute left-[5%] top-[20%] w-20 h-20 rounded-full bg-cyan-500/10 blur-2xl animate-glow-pulse" />
-          <div className="absolute right-[10%] top-[30%] w-16 h-16 rounded-full bg-teal-400/8 blur-xl animate-glow-pulse" style={{ animationDelay: '1s' }} />
-          <div className="absolute left-[15%] bottom-[25%] w-32 h-32 rounded-full bg-blue-500/8 blur-3xl animate-glow-pulse" style={{ animationDelay: '2s' }} />
-          <div className="absolute right-[8%] bottom-[35%] w-24 h-24 rounded-full bg-cyan-400/10 blur-2xl animate-glow-pulse" style={{ animationDelay: '0.5s' }} />
-          <div className="absolute left-[80%] top-[15%] w-14 h-14 rounded-full bg-teal-500/10 blur-xl animate-glow-pulse" style={{ animationDelay: '1.5s' }} />
-          <div className="absolute left-[3%] top-[50%] w-40 h-40 rounded-full bg-blue-400/5 blur-3xl animate-glow-pulse" style={{ animationDelay: '3s' }} />
-          <div className="absolute right-[3%] bottom-[10%] w-28 h-28 rounded-full bg-cyan-300/8 blur-2xl animate-glow-pulse" style={{ animationDelay: '2.5s' }} />
+          {/* Swimming fish */}
+          <div className="absolute left-[3%] top-[15%] text-4xl animate-swim-right opacity-70" style={{ animationDuration: '18s' }}>🐟</div>
+          <div className="absolute right-[5%] top-[25%] text-3xl animate-swim-left opacity-60" style={{ animationDuration: '20s', animationDelay: '2s' }}>🐠</div>
+          <div className="absolute left-[8%] top-[45%] text-5xl animate-swim-right opacity-50" style={{ animationDuration: '22s', animationDelay: '4s' }}>🐡</div>
+          <div className="absolute right-[10%] bottom-[30%] text-4xl animate-swim-left opacity-65" style={{ animationDuration: '16s', animationDelay: '1s' }}>🐟</div>
+          
+          {/* Cute seals */}
+          <div className="absolute left-[5%] bottom-[20%] text-5xl animate-float-gentle opacity-80">🦭</div>
+          <div className="absolute right-[8%] top-[35%] text-4xl animate-float-gentle opacity-70" style={{ animationDelay: '1.5s' }}>🦭</div>
+          
+          {/* Ocean creatures */}
+          <div className="absolute left-[85%] bottom-[15%] text-4xl animate-float-gentle opacity-60" style={{ animationDelay: '3s' }}>🐙</div>
+          <div className="absolute left-[12%] top-[65%] text-3xl animate-swim-right opacity-55" style={{ animationDuration: '25s', animationDelay: '5s' }}>🦑</div>
+          <div className="absolute right-[15%] bottom-[45%] text-3xl animate-float-gentle opacity-50" style={{ animationDelay: '2.5s' }}>🦐</div>
+          
+          {/* Coral and plants at bottom */}
+          <div className="absolute left-[10%] bottom-[3%] text-5xl opacity-40">🪸</div>
+          <div className="absolute left-[25%] bottom-[2%] text-4xl opacity-35">🌿</div>
+          <div className="absolute right-[20%] bottom-[3%] text-5xl opacity-40">🪸</div>
+          <div className="absolute right-[8%] bottom-[2%] text-4xl opacity-30">🌊</div>
+          
+          {/* Bubbles */}
+          <div className="absolute left-[30%] bottom-[10%] text-2xl animate-bubble-rise opacity-40">🫧</div>
+          <div className="absolute left-[50%] bottom-[5%] text-3xl animate-bubble-rise opacity-35" style={{ animationDelay: '1s' }}>🫧</div>
+          <div className="absolute right-[35%] bottom-[8%] text-2xl animate-bubble-rise opacity-45" style={{ animationDelay: '2s' }}>🫧</div>
         </>
       )}
       
-      {/* Floating Love Texts - Elegant fade */}
+      {/* Floating Love Texts - Beautiful messages */}
       {floatingTexts.map(textItem => (
         <div
           key={textItem.id}
-          className="absolute z-10 pointer-events-none animate-love-text-elegant text-cyan-300/15 font-light tracking-wider"
+          className="absolute z-10 pointer-events-none animate-love-text-float text-white/30 font-medium"
           style={{
             left: `${textItem.x}%`,
             top: `${textItem.y}%`,
             fontSize: `${textItem.size}px`,
             animationDuration: `${textItem.duration}ms`,
-            textShadow: '0 0 20px rgba(34, 211, 238, 0.3)',
+            textShadow: '0 0 15px rgba(34, 211, 238, 0.5), 0 0 30px rgba(34, 211, 238, 0.3)',
           }}
         >
           {textItem.text}
@@ -478,6 +502,16 @@ export default function LovePage() {
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-blue-400/8 blur-2xl animate-breathe" style={{ animationDelay: '1s' }} />
           </div>
           
+          {/* Background ocean emojis */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute left-[5%] top-[10%] text-4xl opacity-20 animate-float-gentle">🐟</div>
+            <div className="absolute right-[8%] top-[15%] text-3xl opacity-15 animate-float-gentle" style={{ animationDelay: '1s' }}>🐠</div>
+            <div className="absolute left-[10%] bottom-[20%] text-5xl opacity-20 animate-float-gentle" style={{ animationDelay: '2s' }}>🪸</div>
+            <div className="absolute right-[12%] bottom-[25%] text-4xl opacity-15 animate-float-gentle" style={{ animationDelay: '0.5s' }}>🫧</div>
+            <div className="absolute left-[80%] top-[40%] text-3xl opacity-20 animate-float-gentle" style={{ animationDelay: '1.5s' }}>🐡</div>
+            <div className="absolute left-[15%] top-[50%] text-4xl opacity-15 animate-float-gentle" style={{ animationDelay: '2.5s' }}>🌊</div>
+          </div>
+          
           {/* Subtle ocean glow at bottom */}
           <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-cyan-900/15 via-cyan-900/5 to-transparent pointer-events-none" />
           
@@ -510,23 +544,25 @@ export default function LovePage() {
           {/* Ocean gradient hint at bottom */}
           <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-cyan-900/20 via-cyan-900/5 to-transparent pointer-events-none" />
           
-          {/* Floating particles */}
+          {/* Floating ocean emojis */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <div className="absolute w-1.5 h-1.5 rounded-full bg-cyan-400/30 animate-particle-rise" style={{ left: '10%', bottom: '-2%', animationDelay: '0s' }} />
-            <div className="absolute w-2 h-2 rounded-full bg-cyan-300/25 animate-particle-rise" style={{ left: '25%', bottom: '-2%', animationDelay: '1.5s' }} />
-            <div className="absolute w-1 h-1 rounded-full bg-teal-400/35 animate-particle-rise" style={{ left: '45%', bottom: '-2%', animationDelay: '0.8s' }} />
-            <div className="absolute w-2 h-2 rounded-full bg-blue-300/30 animate-particle-rise" style={{ left: '65%', bottom: '-2%', animationDelay: '2.2s' }} />
-            <div className="absolute w-1.5 h-1.5 rounded-full bg-cyan-400/25 animate-particle-rise" style={{ left: '85%', bottom: '-2%', animationDelay: '1s' }} />
+            <div className="absolute text-4xl opacity-25 animate-swim-right" style={{ left: '-5%', top: '15%', animationDuration: '20s' }}>🐟</div>
+            <div className="absolute text-3xl opacity-20 animate-swim-left" style={{ right: '-5%', top: '30%', animationDuration: '18s', animationDelay: '3s' }}>🐠</div>
+            <div className="absolute text-5xl opacity-30 animate-float-gentle" style={{ left: '5%', bottom: '15%' }}>🦭</div>
+            <div className="absolute text-4xl opacity-20 animate-float-gentle" style={{ right: '8%', bottom: '20%', animationDelay: '1s' }}>🐙</div>
+            <div className="absolute text-3xl opacity-25 animate-bubble-rise" style={{ left: '20%', bottom: '5%' }}>🫧</div>
+            <div className="absolute text-3xl opacity-20 animate-bubble-rise" style={{ left: '70%', bottom: '8%', animationDelay: '2s' }}>🫧</div>
+            <div className="absolute text-4xl opacity-15 animate-float-gentle" style={{ left: '85%', top: '45%', animationDelay: '2s' }}>🐡</div>
           </div>
           
           <h1 className="mb-10 animate-fade-in-up text-3xl font-light md:text-4xl lg:text-5xl text-white/95 max-w-3xl px-6 leading-relaxed" style={{ textShadow: '0 0 40px rgba(34, 211, 238, 0.4)' }}>
-            ¿Quieres salir de la obscuridad y sumergirte conmigo?
+            ¿Quieres salir de la obscuridad y sumergirte conmigo? 🌊
           </h1>
           <button
             onClick={handleSubmerge}
             className="group relative rounded-full border border-cyan-400/50 bg-cyan-500/10 px-12 py-4 text-lg font-medium tracking-wider uppercase text-cyan-300 transition-all duration-500 hover:scale-105 hover:bg-cyan-400/20 hover:border-cyan-400 hover:text-white hover:shadow-[0_0_40px_rgba(34,211,238,0.4)]"
           >
-            <span className="relative z-10">Sumergirse</span>
+            <span className="relative z-10">🦭 Sumergirse 🦭</span>
             <div className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-400/0 via-cyan-400/10 to-cyan-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </button>
         </div>
