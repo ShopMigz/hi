@@ -195,20 +195,20 @@ export default function LovePage() {
     }
   }, [stage])
   
-  // Generate floating love texts - slow and calm like bubbles
+  // Generate floating love texts - fast fade in/out
   useEffect(() => {
     if (stage === "content") {
       const generateText = () => {
         const newText: FloatingText = {
           id: Date.now() + Math.random(),
           x: Math.random() * 80 + 10,
-          y: 85 + Math.random() * 10, // Start from bottom
+          y: 75 + Math.random() * 15, // Start from bottom
           text: loveTexts[Math.floor(Math.random() * loveTexts.length)],
-          duration: 12000, // Much slower - 12 seconds
-          size: Math.random() * 10 + 14,
+          duration: 4000, // Fast - 4 seconds
+          size: Math.random() * 12 + 16,
         }
         setFloatingTexts(prev => {
-          const filtered = prev.length >= 5 ? prev.slice(1) : prev // Less texts at a time
+          const filtered = prev.length >= 8 ? prev.slice(1) : prev
           return [...filtered, newText]
         })
         setTimeout(() => {
@@ -217,7 +217,7 @@ export default function LovePage() {
       }
       
       generateText()
-      const interval = setInterval(generateText, 4000) // Less frequent - every 4 seconds
+      const interval = setInterval(generateText, 1500) // More frequent - every 1.5 seconds
       return () => clearInterval(interval)
     }
   }, [stage])
@@ -555,15 +555,18 @@ export default function LovePage() {
             <div className="absolute text-4xl opacity-15 animate-float-gentle" style={{ left: '85%', top: '45%', animationDelay: '2s' }}>🐡</div>
           </div>
           
-          <h1 className="mb-10 animate-fade-in-up text-3xl font-light md:text-4xl lg:text-5xl text-white/95 max-w-3xl px-6 leading-relaxed" style={{ textShadow: '0 0 40px rgba(34, 211, 238, 0.4)' }}>
-            ¿Quieres salir de la obscuridad y sumergirte conmigo? 🌊
+          <h1 className="mb-12 animate-fade-in-up text-3xl font-light md:text-4xl lg:text-5xl text-white/90 max-w-3xl px-6 leading-relaxed" style={{ textShadow: '0 0 40px rgba(34, 211, 238, 0.4)' }}>
+            ¿Quieres salir de la obscuridad y sumergirte conmigo?
           </h1>
           <button
             onClick={handleSubmerge}
-            className="group relative rounded-full border border-cyan-400/50 bg-cyan-500/10 px-12 py-4 text-lg font-medium tracking-wider uppercase text-cyan-300 transition-all duration-500 hover:scale-105 hover:bg-cyan-400/20 hover:border-cyan-400 hover:text-white hover:shadow-[0_0_40px_rgba(34,211,238,0.4)]"
+            className="group relative px-16 py-6 transition-all duration-500 hover:scale-110"
           >
-            <span className="relative z-10">🦭 Sumergirse 🦭</span>
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-400/0 via-cyan-400/10 to-cyan-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <span className="relative z-10 text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-cyan-100 to-cyan-300 animate-shimmer-text">
+              SUMERGIRSE
+            </span>
+            <div className="absolute inset-0 blur-xl bg-gradient-to-r from-cyan-500/30 via-cyan-300/40 to-cyan-500/30 animate-glow-pulse" />
+            <div className="absolute inset-x-0 -bottom-2 h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-60 group-hover:opacity-100 transition-opacity" />
           </button>
         </div>
       )}
