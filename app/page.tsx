@@ -289,173 +289,143 @@ export default function LovePage() {
           background: cigarettesEffect 
             ? undefined
             : submerged 
-              ? "linear-gradient(to bottom, #0c1929 0%, #0d1f33 30%, #0a1628 60%, #081220 100%)" 
+              ? "linear-gradient(to bottom, #0a1628 0%, #0d1a2e 25%, #0f1d35 50%, #081525 75%, #050d18 100%)" 
               : undefined
         }}
       >
-        {/* Floating bubbles in background */}
+        {/* Animated underwater light rays */}
         {submerged && !cigarettesEffect && (
           <>
-            <div className="absolute w-2 h-2 rounded-full bg-white/20 animate-bubble-float" style={{ left: '8%', bottom: '-5%', animationDelay: '0s' }} />
-            <div className="absolute w-3 h-3 rounded-full bg-white/15 animate-bubble-float" style={{ left: '15%', bottom: '-5%', animationDelay: '2s' }} />
-            <div className="absolute w-1 h-1 rounded-full bg-white/25 animate-bubble-float" style={{ left: '25%', bottom: '-5%', animationDelay: '4s' }} />
-            <div className="absolute w-2 h-2 rounded-full bg-white/20 animate-bubble-float" style={{ left: '35%', bottom: '-5%', animationDelay: '1s' }} />
-            <div className="absolute w-4 h-4 rounded-full bg-white/10 animate-bubble-float" style={{ left: '50%', bottom: '-5%', animationDelay: '3s' }} />
-            <div className="absolute w-2 h-2 rounded-full bg-white/20 animate-bubble-float" style={{ left: '65%', bottom: '-5%', animationDelay: '5s' }} />
-            <div className="absolute w-1 h-1 rounded-full bg-white/30 animate-bubble-float" style={{ left: '75%', bottom: '-5%', animationDelay: '2.5s' }} />
-            <div className="absolute w-3 h-3 rounded-full bg-white/15 animate-bubble-float" style={{ left: '88%', bottom: '-5%', animationDelay: '4.5s' }} />
+            <div className="absolute top-0 left-[10%] w-[120px] h-full bg-gradient-to-b from-cyan-400/8 via-cyan-300/3 to-transparent animate-light-ray-1 blur-sm" />
+            <div className="absolute top-0 left-[25%] w-[80px] h-full bg-gradient-to-b from-blue-400/6 via-blue-300/2 to-transparent animate-light-ray-2 blur-md" />
+            <div className="absolute top-0 left-[45%] w-[150px] h-full bg-gradient-to-b from-teal-400/7 via-teal-300/3 to-transparent animate-light-ray-3 blur-sm" />
+            <div className="absolute top-0 left-[65%] w-[100px] h-full bg-gradient-to-b from-cyan-300/5 via-cyan-200/2 to-transparent animate-light-ray-1 blur-lg" style={{ animationDelay: '2s' }} />
+            <div className="absolute top-0 left-[85%] w-[90px] h-full bg-gradient-to-b from-blue-300/6 via-blue-200/2 to-transparent animate-light-ray-2 blur-md" style={{ animationDelay: '4s' }} />
           </>
         )}
         
-        {/* Fish and sea creatures when submerged - matching reference design */}
+        {/* Floating particles - subtle and organic */}
         {submerged && !cigarettesEffect && (
           <>
-            {/* Blue tropical fish - left side */}
-            <div className="absolute text-4xl animate-swim-left" style={{ top: '12%', left: '-10%', animationDuration: '15s' }}>🐟</div>
-            <div className="absolute text-3xl animate-swim-left" style={{ top: '8%', left: '-15%', animationDuration: '18s', animationDelay: '3s' }}>🐟</div>
+            {/* Glowing orbs */}
+            <div className="absolute w-1 h-1 rounded-full bg-cyan-300/40 animate-particle-rise" style={{ left: '5%', bottom: '-2%', animationDelay: '0s' }} />
+            <div className="absolute w-2 h-2 rounded-full bg-cyan-400/30 animate-particle-rise" style={{ left: '12%', bottom: '-2%', animationDelay: '3s' }} />
+            <div className="absolute w-1.5 h-1.5 rounded-full bg-teal-300/35 animate-particle-rise" style={{ left: '22%', bottom: '-2%', animationDelay: '1.5s' }} />
+            <div className="absolute w-1 h-1 rounded-full bg-blue-300/40 animate-particle-rise" style={{ left: '38%', bottom: '-2%', animationDelay: '4s' }} />
+            <div className="absolute w-2.5 h-2.5 rounded-full bg-cyan-300/25 animate-particle-rise" style={{ left: '55%', bottom: '-2%', animationDelay: '2s' }} />
+            <div className="absolute w-1 h-1 rounded-full bg-teal-400/40 animate-particle-rise" style={{ left: '68%', bottom: '-2%', animationDelay: '5s' }} />
+            <div className="absolute w-1.5 h-1.5 rounded-full bg-cyan-400/35 animate-particle-rise" style={{ left: '78%', bottom: '-2%', animationDelay: '1s' }} />
+            <div className="absolute w-2 h-2 rounded-full bg-blue-400/30 animate-particle-rise" style={{ left: '92%', bottom: '-2%', animationDelay: '3.5s' }} />
             
-            {/* Orange/yellow fish - right side */}
-            <div className="absolute text-3xl animate-swim-right" style={{ top: '10%', right: '-10%', animationDuration: '16s', animationDelay: '1s' }}>🐡</div>
-            
-            {/* Striped fish */}
-            <div className="absolute text-4xl animate-swim-right" style={{ top: '25%', right: '-10%', animationDuration: '14s', animationDelay: '2s' }}>🐠</div>
-            
-            {/* Shrimp/sea life on right */}
-            <div className="absolute text-3xl animate-swim-right" style={{ top: '18%', right: '-8%', animationDuration: '20s', animationDelay: '5s' }}>🦐</div>
-            
-            {/* Octopus - left bottom area */}
-            <div className="absolute text-5xl animate-float-1" style={{ bottom: '25%', left: '5%' }}>🐙</div>
-            
-            {/* Mango/fruit reference - bottom left */}
-            <div className="absolute text-6xl animate-float-2" style={{ bottom: '15%', left: '18%' }}>🥭</div>
-            
-            {/* Coral and plants - bottom */}
-            <div className="absolute text-5xl animate-float-3" style={{ bottom: '3%', right: '8%' }}>🪸</div>
-            <div className="absolute text-4xl animate-float-1" style={{ bottom: '5%', right: '5%' }}>🌿</div>
-            
-            {/* More fish around the screen */}
-            <div className="absolute text-3xl animate-swim-left" style={{ top: '45%', left: '-10%', animationDuration: '17s', animationDelay: '4s' }}>🐠</div>
-            <div className="absolute text-4xl animate-swim-right" style={{ top: '55%', right: '-10%', animationDuration: '19s', animationDelay: '6s' }}>🐟</div>
-            <div className="absolute text-3xl animate-swim-left" style={{ top: '70%', left: '-10%', animationDuration: '21s', animationDelay: '8s' }}>🦑</div>
-            <div className="absolute text-4xl animate-swim-right" style={{ top: '80%', right: '-10%', animationDuration: '13s', animationDelay: '2.5s' }}>🐙</div>
+            {/* Ambient floating dust */}
+            <div className="absolute w-0.5 h-0.5 rounded-full bg-white/20 animate-dust-float" style={{ left: '15%', top: '20%' }} />
+            <div className="absolute w-0.5 h-0.5 rounded-full bg-white/15 animate-dust-float" style={{ left: '35%', top: '40%', animationDelay: '2s' }} />
+            <div className="absolute w-1 h-1 rounded-full bg-white/10 animate-dust-float" style={{ left: '60%', top: '30%', animationDelay: '4s' }} />
+            <div className="absolute w-0.5 h-0.5 rounded-full bg-white/20 animate-dust-float" style={{ left: '80%', top: '60%', animationDelay: '1s' }} />
+            <div className="absolute w-0.5 h-0.5 rounded-full bg-white/15 animate-dust-float" style={{ left: '45%', top: '70%', animationDelay: '3s' }} />
+          </>
+        )}
+        
+        {/* Depth fog layers */}
+        {submerged && !cigarettesEffect && (
+          <>
+            <div className="absolute bottom-0 left-0 right-0 h-1/4 bg-gradient-to-t from-[#050d18]/80 to-transparent pointer-events-none" />
+            <div className="absolute top-0 left-0 right-0 h-1/6 bg-gradient-to-b from-cyan-900/10 to-transparent pointer-events-none" />
           </>
         )}
       </div>
       
-      {/* Cigarettes Special Effect - Full screen blue to pink with click */}
+      {/* Cigarettes Special Effect - Cinematic atmosphere */}
       {cigarettesEffect && (
         <div 
           className="fixed inset-0 -z-10 overflow-hidden cursor-pointer"
           onClick={handleOceanClick}
         >
-          {/* Main animated gradient - transforms to ocean on click */}
-          <div className={`absolute inset-0 transition-all duration-1000 animate-gradient-shift ${
+          {/* Base gradient with aurora effect */}
+          <div className={`absolute inset-0 transition-all duration-1500 ${
             oceanClickEffect 
-              ? "bg-gradient-to-b from-cyan-300 via-blue-400 to-pink-300" 
-              : "bg-gradient-to-r from-blue-900 via-purple-900 to-pink-900"
+              ? "bg-gradient-to-b from-[#0a1628] via-[#0d1f35] to-[#050d18]" 
+              : "bg-gradient-to-br from-[#0f0a1a] via-[#1a0f2e] to-[#0a0f1a]"
           }`} />
           
-          {/* Ocean underwater effect when clicked */}
-          {oceanClickEffect && (
-            <>
-              {/* Light rays from surface */}
-              <div className="absolute top-0 left-[10%] w-20 h-full bg-gradient-to-b from-white/40 via-cyan-200/20 to-transparent blur-sm animate-pulse" />
-              <div className="absolute top-0 left-[30%] w-16 h-full bg-gradient-to-b from-white/30 via-blue-200/15 to-transparent blur-sm animate-pulse" style={{ animationDelay: "0.5s" }} />
-              <div className="absolute top-0 right-[25%] w-24 h-full bg-gradient-to-b from-white/35 via-pink-200/20 to-transparent blur-sm animate-pulse" style={{ animationDelay: "1s" }} />
-              <div className="absolute top-0 right-[10%] w-12 h-full bg-gradient-to-b from-white/25 via-cyan-100/10 to-transparent blur-sm animate-pulse" style={{ animationDelay: "1.5s" }} />
-              
-              {/* Floating sea creatures */}
-              <div className="absolute top-[20%] left-[5%] text-5xl animate-float-1">🐠</div>
-              <div className="absolute top-[40%] right-[8%] text-4xl animate-float-2">🐟</div>
-              <div className="absolute bottom-[30%] left-[15%] text-6xl animate-float-3">🐙</div>
-              <div className="absolute top-[60%] right-[20%] text-5xl animate-float-1">🦑</div>
-              <div className="absolute bottom-[20%] right-[5%] text-7xl animate-float-2">🪸</div>
-              <div className="absolute bottom-[15%] left-[40%] text-4xl animate-float-3">🐡</div>
-              
-              {/* Hint text */}
-              <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/60 text-sm animate-pulse">
-                Click para cambiar el ambiente
-              </div>
-            </>
-          )}
+          {/* Aurora waves */}
+          <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute -top-1/2 -left-1/4 w-[150%] h-full bg-gradient-to-r from-transparent via-purple-600/10 to-transparent animate-aurora-1 blur-3xl" />
+            <div className="absolute -top-1/2 -right-1/4 w-[150%] h-full bg-gradient-to-l from-transparent via-cyan-500/8 to-transparent animate-aurora-2 blur-3xl" />
+            <div className="absolute top-1/4 left-0 w-full h-1/2 bg-gradient-to-r from-transparent via-pink-500/6 to-transparent animate-aurora-3 blur-3xl" />
+          </div>
           
-          {/* Default smoke/night effect */}
-          {!oceanClickEffect && (
-            <>
-              {/* Overlay glow effects */}
-              <div className="absolute inset-0">
-                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-cyan-500/40 via-transparent to-transparent animate-pulse" />
-                <div className="absolute bottom-0 right-0 w-full h-full bg-gradient-to-tl from-pink-500/40 via-transparent to-transparent animate-pulse" style={{ animationDelay: "1s" }} />
-              </div>
-              
-              {/* Moving light beams */}
-              <div className="absolute top-0 left-[20%] w-1 h-full bg-gradient-to-b from-cyan-400/30 via-cyan-400/10 to-transparent animate-beam-1" />
-              <div className="absolute top-0 right-[30%] w-1 h-full bg-gradient-to-b from-pink-400/30 via-pink-400/10 to-transparent animate-beam-2" />
-              <div className="absolute top-0 left-[60%] w-1 h-full bg-gradient-to-b from-purple-400/20 via-purple-400/10 to-transparent animate-beam-3" />
-              
-              {/* Floating smoke particles */}
-              <div className="absolute bottom-[10%] left-[5%] w-4 h-4 rounded-full bg-white/15 animate-smoke-1" />
-              <div className="absolute bottom-[20%] left-[20%] w-6 h-6 rounded-full bg-cyan-300/10 animate-smoke-2" />
-              <div className="absolute bottom-[5%] left-[40%] w-3 h-3 rounded-full bg-white/20 animate-smoke-3" />
-              <div className="absolute bottom-[15%] right-[15%] w-5 h-5 rounded-full bg-pink-300/10 animate-smoke-1" style={{ animationDelay: "1s" }} />
-              <div className="absolute bottom-[25%] right-[30%] w-4 h-4 rounded-full bg-white/15 animate-smoke-2" style={{ animationDelay: "0.5s" }} />
-              <div className="absolute bottom-[8%] right-[5%] w-6 h-6 rounded-full bg-purple-300/10 animate-smoke-3" style={{ animationDelay: "1.5s" }} />
-              
-              {/* Text overlays */}
-              <div className="absolute top-[15%] left-[10%] text-6xl font-black text-white/5 animate-float-1">CIGARETTES</div>
-              <div className="absolute bottom-[20%] right-[5%] text-4xl font-black text-white/5 animate-float-2">OUT THE WINDOW</div>
-              
-              {/* Hint text */}
-              <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/40 text-sm animate-pulse">
-                Click para sumergirte en el oceano
-              </div>
-            </>
-          )}
+          {/* Dynamic light streaks */}
+          <div className="absolute top-0 left-[15%] w-[2px] h-full bg-gradient-to-b from-cyan-400/40 via-cyan-400/10 to-transparent animate-streak-fall" />
+          <div className="absolute top-0 left-[35%] w-[1px] h-full bg-gradient-to-b from-purple-400/30 via-purple-400/5 to-transparent animate-streak-fall" style={{ animationDelay: '1.5s' }} />
+          <div className="absolute top-0 right-[25%] w-[2px] h-full bg-gradient-to-b from-pink-400/35 via-pink-400/8 to-transparent animate-streak-fall" style={{ animationDelay: '0.8s' }} />
+          <div className="absolute top-0 right-[10%] w-[1px] h-full bg-gradient-to-b from-blue-400/25 via-blue-400/5 to-transparent animate-streak-fall" style={{ animationDelay: '2.2s' }} />
+          
+          {/* Floating ethereal orbs */}
+          <div className="absolute w-40 h-40 rounded-full bg-purple-500/15 blur-3xl animate-orb-float-1" style={{ top: '10%', left: '10%' }} />
+          <div className="absolute w-32 h-32 rounded-full bg-cyan-400/12 blur-2xl animate-orb-float-2" style={{ top: '30%', right: '15%' }} />
+          <div className="absolute w-48 h-48 rounded-full bg-pink-500/10 blur-3xl animate-orb-float-3" style={{ bottom: '20%', left: '20%' }} />
+          <div className="absolute w-24 h-24 rounded-full bg-blue-400/15 blur-2xl animate-orb-float-1" style={{ bottom: '30%', right: '25%', animationDelay: '2s' }} />
+          
+          {/* Smoke wisps */}
+          <div className="absolute bottom-0 left-[5%] w-1 h-32 bg-gradient-to-t from-white/5 to-transparent animate-smoke-rise" />
+          <div className="absolute bottom-0 left-[15%] w-0.5 h-40 bg-gradient-to-t from-white/8 to-transparent animate-smoke-rise" style={{ animationDelay: '1s' }} />
+          <div className="absolute bottom-0 right-[20%] w-1 h-36 bg-gradient-to-t from-white/6 to-transparent animate-smoke-rise" style={{ animationDelay: '2s' }} />
+          <div className="absolute bottom-0 right-[8%] w-0.5 h-28 bg-gradient-to-t from-white/7 to-transparent animate-smoke-rise" style={{ animationDelay: '0.5s' }} />
+          
+          {/* Vignette */}
+          <div className="absolute inset-0 bg-radial-vignette pointer-events-none" />
+          
+          {/* Hint text */}
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/30 text-xs tracking-widest uppercase animate-pulse">
+            {oceanClickEffect ? "Click para volver" : "Click para cambiar"}
+          </div>
         </div>
       )}
 
-      {/* Underwater creatures */}
+      {/* Ambient glow orbs - replacing ugly emojis */}
       {stage === "content" && (
         <>
-          <div className="absolute left-[5%] top-[20%] text-4xl animate-float-1 opacity-60">🐟</div>
-          <div className="absolute right-[10%] top-[30%] text-3xl animate-float-2 opacity-50">🐠</div>
-          <div className="absolute left-[15%] bottom-[25%] text-5xl animate-float-3 opacity-40">🐙</div>
-          <div className="absolute right-[8%] bottom-[35%] text-4xl animate-float-1 opacity-50">🦑</div>
-          <div className="absolute left-[80%] top-[15%] text-3xl animate-float-2 opacity-60">🐡</div>
-          <div className="absolute left-[3%] top-[50%] text-6xl animate-float-3 opacity-30">🪸</div>
-          <div className="absolute right-[3%] bottom-[10%] text-5xl animate-float-1 opacity-40">🌿</div>
+          <div className="absolute left-[5%] top-[20%] w-20 h-20 rounded-full bg-cyan-500/10 blur-2xl animate-glow-pulse" />
+          <div className="absolute right-[10%] top-[30%] w-16 h-16 rounded-full bg-teal-400/8 blur-xl animate-glow-pulse" style={{ animationDelay: '1s' }} />
+          <div className="absolute left-[15%] bottom-[25%] w-32 h-32 rounded-full bg-blue-500/8 blur-3xl animate-glow-pulse" style={{ animationDelay: '2s' }} />
+          <div className="absolute right-[8%] bottom-[35%] w-24 h-24 rounded-full bg-cyan-400/10 blur-2xl animate-glow-pulse" style={{ animationDelay: '0.5s' }} />
+          <div className="absolute left-[80%] top-[15%] w-14 h-14 rounded-full bg-teal-500/10 blur-xl animate-glow-pulse" style={{ animationDelay: '1.5s' }} />
+          <div className="absolute left-[3%] top-[50%] w-40 h-40 rounded-full bg-blue-400/5 blur-3xl animate-glow-pulse" style={{ animationDelay: '3s' }} />
+          <div className="absolute right-[3%] bottom-[10%] w-28 h-28 rounded-full bg-cyan-300/8 blur-2xl animate-glow-pulse" style={{ animationDelay: '2.5s' }} />
         </>
       )}
       
-      {/* Floating Love Texts */}
+      {/* Floating Love Texts - Elegant fade */}
       {floatingTexts.map(textItem => (
         <div
           key={textItem.id}
-          className="absolute z-10 pointer-events-none animate-love-text text-white/20 font-bold italic"
+          className="absolute z-10 pointer-events-none animate-love-text-elegant text-cyan-300/15 font-light tracking-wider"
           style={{
             left: `${textItem.x}%`,
             top: `${textItem.y}%`,
             fontSize: `${textItem.size}px`,
             animationDuration: `${textItem.duration}ms`,
+            textShadow: '0 0 20px rgba(34, 211, 238, 0.3)',
           }}
         >
           {textItem.text}
         </div>
       ))}
 
-      {/* Floating Seal Images */}
+      {/* Floating Seal Images - Elegant drift */}
       {floatingSeals.map(seal => (
         <div
           key={seal.id}
-          className={`absolute z-20 cursor-pointer transition-all ${
+          className={`absolute z-20 cursor-pointer transition-all duration-500 ${
             poppingSeals.includes(seal.id) 
-              ? "animate-seal-pop" 
-              : "animate-seal-float hover:scale-110"
+              ? "animate-seal-pop-elegant" 
+              : "animate-seal-drift hover:scale-105 hover:brightness-110"
           }`}
           style={{
             left: `${seal.x}%`,
             top: `${seal.y}%`,
-            animationDuration: poppingSeals.includes(seal.id) ? "500ms" : `${seal.duration}ms`,
+            animationDuration: poppingSeals.includes(seal.id) ? "600ms" : `${seal.duration}ms`,
             animationDelay: poppingSeals.includes(seal.id) ? "0ms" : `${seal.delay}ms`,
           }}
           onClick={() => handleSealPop(seal.id)}
@@ -463,20 +433,22 @@ export default function LovePage() {
           <Image
             src={seal.image}
             alt="Foquita"
-            width={100}
-            height={100}
-            className="rounded-full object-cover shadow-lg"
+            width={90}
+            height={90}
+            className="rounded-full object-cover shadow-[0_0_30px_rgba(34,211,238,0.3)] ring-2 ring-cyan-400/20"
           />
-          {/* Bubble particles when popping */}
+          {/* Sparkle particles when popping */}
           {poppingSeals.includes(seal.id) && (
             <div className="absolute inset-0 flex items-center justify-center">
-              {[...Array(8)].map((_, i) => (
+              {[...Array(12)].map((_, i) => (
                 <div 
                   key={i}
-                  className="absolute w-3 h-3 rounded-full bg-white/60 animate-bubble-burst"
+                  className="absolute w-2 h-2 rounded-full animate-sparkle-burst"
                   style={{
-                    animationDelay: `${i * 50}ms`,
-                    transform: `rotate(${i * 45}deg) translateY(-30px)`,
+                    animationDelay: `${i * 30}ms`,
+                    background: i % 3 === 0 ? 'rgba(34, 211, 238, 0.8)' : i % 3 === 1 ? 'rgba(56, 189, 248, 0.7)' : 'rgba(255, 255, 255, 0.6)',
+                    boxShadow: '0 0 8px currentColor',
+                    ['--angle' as string]: `${i * 30}deg`,
                   }}
                 />
               ))}
@@ -503,21 +475,27 @@ export default function LovePage() {
       {/* Stage 1: Seal Intro */}
       {stage === "seal" && (
         <div
-          className="fixed inset-0 z-[10000] flex cursor-pointer flex-col items-center justify-center bg-[#0a0a0f]"
+          className="fixed inset-0 z-[10000] flex cursor-pointer flex-col items-center justify-center bg-[#050810]"
           onClick={handleSealClick}
         >
-          {/* Subtle ocean glow at bottom */}
-          <div className="absolute bottom-0 left-0 right-0 h-1/4 bg-gradient-to-t from-cyan-900/20 to-transparent pointer-events-none" />
+          {/* Ambient background glow */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-cyan-500/5 blur-3xl animate-breathe" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-blue-400/8 blur-2xl animate-breathe" style={{ animationDelay: '1s' }} />
+          </div>
           
-          <div className={`text-9xl drop-shadow-[0_0_30px_rgba(0,180,216,0.8)] transition-all duration-300 ${
+          {/* Subtle ocean glow at bottom */}
+          <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-cyan-900/15 via-cyan-900/5 to-transparent pointer-events-none" />
+          
+          <div className={`text-[10rem] transition-all duration-500 ${
             sealClicked 
-              ? "scale-150 rotate-12 animate-seal-pulse" 
-              : "animate-float-seal hover:scale-110"
-          }`}>
+              ? "scale-[1.8] rotate-6 animate-seal-expand" 
+              : "animate-seal-breathe hover:scale-110"
+          }`} style={{ filter: 'drop-shadow(0 0 40px rgba(34, 211, 238, 0.6))' }}>
             🦭
           </div>
-          <p className={`mt-5 font-bold tracking-[3px] text-cyan-400 transition-opacity ${sealClicked ? "opacity-0" : ""}`}>
-            CLICK A LA FOQUITA
+          <p className={`mt-8 text-sm font-medium tracking-[4px] uppercase text-cyan-400/80 transition-all duration-300 ${sealClicked ? "opacity-0 translate-y-4" : "animate-pulse-subtle"}`}>
+            Click a la foquita
           </p>
         </div>
       )}
@@ -525,30 +503,37 @@ export default function LovePage() {
       {/* Stage 2: Question */}
       {stage === "question" && (
         <div
-          className={`fixed inset-0 z-[5000] flex flex-col items-center justify-center text-center transition-opacity duration-1000 bg-[#0a0a0f] ${
-            submerged ? "pointer-events-none opacity-0" : "opacity-100"
+          className={`fixed inset-0 z-[5000] flex flex-col items-center justify-center text-center transition-all duration-1000 bg-[#050810] ${
+            submerged ? "pointer-events-none opacity-0 scale-95" : "opacity-100 scale-100"
           }`}
         >
-          {/* Ocean gradient hint at bottom */}
-          <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-cyan-900/30 to-transparent pointer-events-none" />
-          
-          {/* Bubbles animation hint */}
+          {/* Ambient background */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <div className="absolute bottom-0 left-[10%] w-4 h-4 rounded-full bg-cyan-400/20 animate-bubble" style={{ animationDuration: "4s" }} />
-            <div className="absolute bottom-0 left-[30%] w-6 h-6 rounded-full bg-cyan-400/15 animate-bubble" style={{ animationDuration: "5s", animationDelay: "1s" }} />
-            <div className="absolute bottom-0 left-[50%] w-3 h-3 rounded-full bg-cyan-400/25 animate-bubble" style={{ animationDuration: "3.5s", animationDelay: "0.5s" }} />
-            <div className="absolute bottom-0 left-[70%] w-5 h-5 rounded-full bg-cyan-400/20 animate-bubble" style={{ animationDuration: "4.5s", animationDelay: "2s" }} />
-            <div className="absolute bottom-0 left-[85%] w-4 h-4 rounded-full bg-cyan-400/15 animate-bubble" style={{ animationDuration: "5.5s", animationDelay: "1.5s" }} />
+            <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-cyan-500/5 blur-3xl animate-breathe" />
+            <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-blue-500/5 blur-3xl animate-breathe" style={{ animationDelay: '2s' }} />
           </div>
           
-          <h1 className="mb-12 animate-fade-in-up text-4xl font-black md:text-5xl lg:text-6xl text-white drop-shadow-[0_0_20px_rgba(0,180,216,0.8)]">
+          {/* Ocean gradient hint at bottom */}
+          <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-cyan-900/20 via-cyan-900/5 to-transparent pointer-events-none" />
+          
+          {/* Floating particles */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute w-1.5 h-1.5 rounded-full bg-cyan-400/30 animate-particle-rise" style={{ left: '10%', bottom: '-2%', animationDelay: '0s' }} />
+            <div className="absolute w-2 h-2 rounded-full bg-cyan-300/25 animate-particle-rise" style={{ left: '25%', bottom: '-2%', animationDelay: '1.5s' }} />
+            <div className="absolute w-1 h-1 rounded-full bg-teal-400/35 animate-particle-rise" style={{ left: '45%', bottom: '-2%', animationDelay: '0.8s' }} />
+            <div className="absolute w-2 h-2 rounded-full bg-blue-300/30 animate-particle-rise" style={{ left: '65%', bottom: '-2%', animationDelay: '2.2s' }} />
+            <div className="absolute w-1.5 h-1.5 rounded-full bg-cyan-400/25 animate-particle-rise" style={{ left: '85%', bottom: '-2%', animationDelay: '1s' }} />
+          </div>
+          
+          <h1 className="mb-10 animate-fade-in-up text-3xl font-light md:text-4xl lg:text-5xl text-white/95 max-w-3xl px-6 leading-relaxed" style={{ textShadow: '0 0 40px rgba(34, 211, 238, 0.4)' }}>
             ¿Quieres salir de la obscuridad y sumergirte conmigo?
           </h1>
           <button
             onClick={handleSubmerge}
-            className="rounded-full border-[3px] border-cyan-400 bg-cyan-500/10 px-16 py-5 text-2xl font-bold text-white transition-all duration-500 hover:scale-110 hover:bg-cyan-400 hover:text-slate-900 hover:shadow-[0_0_30px_rgba(34,211,238,0.6)]"
+            className="group relative rounded-full border border-cyan-400/50 bg-cyan-500/10 px-12 py-4 text-lg font-medium tracking-wider uppercase text-cyan-300 transition-all duration-500 hover:scale-105 hover:bg-cyan-400/20 hover:border-cyan-400 hover:text-white hover:shadow-[0_0_40px_rgba(34,211,238,0.4)]"
           >
-            SUMERGIRSE
+            <span className="relative z-10">Sumergirse</span>
+            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-400/0 via-cyan-400/10 to-cyan-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </button>
         </div>
       )}
@@ -565,9 +550,9 @@ export default function LovePage() {
           </button>
 
           {/* Spotify Style Player */}
-          <div className="absolute left-1/2 top-1/2 z-50 w-[95%] max-w-[420px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl backdrop-blur-xl bg-gradient-to-b from-[#282828]/90 to-[#121212]/95 shadow-[0_8px_32px_rgba(0,0,0,0.4),0_0_60px_rgba(0,180,216,0.15)] border border-white/10 max-h-[90vh]">
-            {/* Animated glow border */}
-            <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500/20 via-blue-500/10 to-teal-500/20 animate-glow-border pointer-events-none" />
+          <div className="absolute left-1/2 top-1/2 z-50 w-[95%] max-w-[420px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl backdrop-blur-2xl bg-gradient-to-b from-[#1a1a1f]/95 to-[#0d0d10]/98 shadow-[0_8px_40px_rgba(0,0,0,0.5),0_0_80px_rgba(34,211,238,0.1)] border border-white/5 max-h-[90vh]">
+            {/* Animated ambient glow */}
+            <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-cyan-500/10 via-transparent to-teal-500/10 animate-ambient-glow pointer-events-none blur-xl" />
             
             {/* Header */}
             <div className="relative bg-gradient-to-b from-ocean-blue/50 via-ocean-blue/30 to-transparent p-5 pb-8">
