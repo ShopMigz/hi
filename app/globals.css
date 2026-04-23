@@ -746,6 +746,23 @@
   backface-visibility: hidden;
 }
 
+/* Text glow pulse animation - for sumergirte text */
+@keyframes text-glow-pulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 15px rgba(34, 211, 238, 0.8));
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 30px rgba(34, 211, 238, 1)) drop-shadow(0 0 50px rgba(34, 211, 238, 0.6));
+    transform: scale(1.02);
+  }
+}
+
+.animate-text-glow-pulse {
+  animation: text-glow-pulse 2.5s ease-in-out infinite;
+  will-change: filter, transform;
+}
+
 .animate-seal-pulse {
   animation: seal-pulse 0.3s ease-in-out infinite;
 }

@@ -282,8 +282,18 @@ export default function LovePage() {
     }
   }
   
-  const handleSealClick = () => {
+  const handleSealClick = (e: React.MouseEvent) => {
     setSealClicked(true)
+    // Generate burst of bubbles from seal position
+    const centerX = window.innerWidth / 2
+    const centerY = window.innerHeight / 2
+    for (let i = 0; i < 15; i++) {
+      setTimeout(() => {
+        const offsetX = (Math.random() - 0.5) * 200
+        const offsetY = (Math.random() - 0.5) * 150
+        generateBubble(centerX + offsetX, centerY + offsetY, 2000 + Math.random() * 1000)
+      }, i * 50)
+    }
     // Play sombr - I don't know you anymore
     playAudioAtTime("/audio/i-dont-know-you-anymore.mp3")
     setTimeout(() => {
@@ -638,7 +648,13 @@ export default function LovePage() {
             <div className="absolute text-4xl opacity-15 animate-float-gentle will-change-transform" style={{ left: '85%', top: '45%', animationDelay: '2s' }}>🐡</div>
           </div>
           
-          <h1 className="mb-12 animate-fade-in-up text-3xl font-light md:text-4xl lg:text-5xl text-white/90 max-w-3xl px-6 leading-relaxed" style={{ textShadow: '0 0 40px rgba(34, 211, 238, 0.4)' }}>
+          <h1 
+            className="mb-12 animate-fade-in-up animate-text-glow-pulse text-4xl font-extrabold md:text-5xl lg:text-6xl text-cyan-100 max-w-4xl px-6 leading-relaxed tracking-wide"
+            style={{ 
+              textShadow: '0 0 10px rgba(34, 211, 238, 1), 0 0 20px rgba(34, 211, 238, 0.9), 0 0 40px rgba(34, 211, 238, 0.7), 0 0 60px rgba(34, 211, 238, 0.5), 0 0 80px rgba(34, 211, 238, 0.3)',
+              filter: 'drop-shadow(0 0 15px rgba(34, 211, 238, 0.8))'
+            }}
+          >
             ¿Quieres salir de la obscuridad y sumergirte conmigo?
           </h1>
           <button
